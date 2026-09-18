@@ -5,9 +5,9 @@ import { LoginForm } from "./LoginForm";
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ next?: string; error?: string }>;
 }) {
-  const { next } = await searchParams;
+  const { next, error } = await searchParams;
 
   return (
     <>
@@ -23,6 +23,12 @@ export default async function LoginPage({
           이메일 매직링크로 진행돼요.
         </p>
       </div>
+      {error === "auth" && (
+        <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+          로그인 링크가 만료되었거나, 링크를 요청한 브라우저와 달라서 확인하지 못했어요. 같은
+          브라우저에서 새 링크를 받아 다시 시도해주세요.
+        </p>
+      )}
       <LoginForm next={next ?? "/dashboard"} />
       <Link href="/" className="text-center text-sm font-semibold text-brand-deep underline">
         홈으로 돌아가기

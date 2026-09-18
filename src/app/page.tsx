@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Mascot } from "@/components/Mascot";
 import { PublicHeader } from "@/components/PublicHeader";
 
@@ -15,7 +16,16 @@ const PRIVACY_POINTS = [
   "위치 자동수집 없음",
 ];
 
-export default function LandingPage() {
+export default async function LandingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ code?: string }>;
+}) {
+  // If Supabase falls back to the Site URL (redirect URL not allow-listed), the
+  // auth code lands here — forward it to the callback instead of dropping it.
+  const { code } = await searchParams;
+  if (code) redirect(`/auth/callback?code=${encodeURIComponent(code)}`);
+
   return (
     <>
     <PublicHeader />
