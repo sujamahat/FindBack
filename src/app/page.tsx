@@ -42,7 +42,7 @@ export default async function LandingPage({
         </p>
         <div className="flex w-full max-w-sm flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
-            href="/items/new"
+            href="/dashboard"
             className="flex-1 rounded-2xl bg-brand px-4 sm:px-6 py-4 text-center text-base font-bold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98]"
           >
             내 물건 등록하기

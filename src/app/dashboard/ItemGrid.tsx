@@ -56,7 +56,7 @@ export function ItemGrid({
                 : "border-line bg-surface text-ink-soft hover:border-rose-200 hover:text-rose-700"
             }`}
           >
-            분실중
+            분실
           </button>
         </div>
       </div>

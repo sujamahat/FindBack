@@ -5,6 +5,7 @@ import { ProfileBanner } from "@/components/ProfileBanner";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { ItemStatus } from "@/lib/constants";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { seedSampleItemsAction } from "./actions";
 import { ItemGrid, type DashboardItem } from "./ItemGrid";
 
 const DEMO_ITEMS: DashboardItem[] = [
@@ -80,6 +81,17 @@ export default async function DashboardPage() {
         />
 
         <ItemGrid initialItems={dashboardItems} />
+
+        {process.env.NODE_ENV !== "production" && (
+          <form action={seedSampleItemsAction} className="mt-6 text-center">
+            <button
+              type="submit"
+              className="rounded-xl border border-dashed border-line px-4 py-2 text-xs font-bold text-ink-mute transition hover:border-brand-line hover:text-brand-deep"
+            >
+              개발용: 샘플 물건 3개 추가
+            </button>
+          </form>
+        )}
       </main>
 
       <div className="no-print sticky bottom-4 z-10 mx-auto hidden md:flex w-full max-w-4xl justify-center px-4 sm:px-6">

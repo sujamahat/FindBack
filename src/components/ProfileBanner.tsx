@@ -34,7 +34,7 @@ export function ProfileBanner({
         </div>
         <div className="rounded-2xl border border-rose-200 bg-rose-50 px-3 py-3">
           <p className="font-mono text-xl font-bold text-rose-700">{lostCount}</p>
-          <p className="mt-1.5 whitespace-nowrap text-[10.5px] text-rose-700">분실중</p>
+          <p className="mt-1.5 whitespace-nowrap text-[10.5px] text-rose-700">분실</p>
         </div>
         <div className="rounded-2xl border border-sky-200 bg-sky-50 px-3 py-3">
           <p className="font-mono text-xl font-bold text-sky-700">{returnedCount}</p>

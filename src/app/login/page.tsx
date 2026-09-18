@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { PublicHeader } from "@/components/PublicHeader";
 import { LoginForm } from "./LoginForm";
 
@@ -8,6 +11,14 @@ export default async function LoginPage({
   searchParams: Promise<{ next?: string; error?: string }>;
 }) {
   const { next, error } = await searchParams;
+
+  if (isSupabaseConfigured && !error) {
+    const supabase = await createSupabaseServerClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (user) redirect(next?.startsWith("/") && !next.startsWith("//") ? next : "/dashboard");
+  }
 
   return (
     <>
