@@ -12,9 +12,6 @@ type Product = {
   imageUrl: string;
 };
 
-const unsplash = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=800&h=600&q=80`;
-
 const PRODUCTS: Product[] = [
   {
     id: "metal-keychain",
@@ -22,7 +19,7 @@ const PRODUCTS: Product[] = [
     price: 9900,
     description: "튼튼한 메탈 소재의 QR 키링. 프린트 태그보다 오래 사용할 수 있어요.",
     emoji: "🔑",
-    imageUrl: unsplash("photo-1727154085760-134cc942246e"),
+    imageUrl: "/images/keychain.png",
   },
   {
     id: "epoxy-sticker-3pack",
@@ -30,7 +27,7 @@ const PRODUCTS: Product[] = [
     price: 5900,
     description: "물병, 우산 등에 바로 붙이는 방수 스티커 3장 세트.",
     emoji: "💧",
-    imageUrl: unsplash("photo-1705039228815-a54991a30167"),
+    imageUrl: "/images/stickers.png",
   },
   {
     id: "leather-luggage-tag",
@@ -38,7 +35,7 @@ const PRODUCTS: Product[] = [
     price: 14900,
     description: "가방과 캐리어에 어울리는 가죽 소재 태그.",
     emoji: "🧳",
-    imageUrl: unsplash("photo-1720430544263-a616840d04b3"),
+    imageUrl: "/images/luggagetag.png",
   },
 ];
 
