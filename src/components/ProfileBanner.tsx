@@ -1,10 +1,13 @@
 export function ProfileBanner({
   email,
+  uid,
   total,
   lostCount,
   returnedCount,
 }: {
   email: string;
+  /** Auth user id; shown shortened as the UID tag. */
+  uid?: string;
   total: number;
   lostCount: number;
   returnedCount: number;
@@ -24,7 +27,12 @@ export function ProfileBanner({
         </div>
         <div className="min-w-0">
           <p className="truncate text-[19px] font-black tracking-tight text-ink">{displayName}</p>
-          <p className="mt-1 truncate font-mono text-xs text-ink-mute">{email}</p>
+          <p className="mt-1 truncate font-mono text-xs text-ink-mute">
+            <span className="mr-1.5 rounded-md bg-brand-soft px-1.5 py-0.5 font-bold text-brand-deep">
+              UID {uid ? uid.slice(0, 8).toUpperCase() : "DEMO"}
+            </span>
+            {email}
+          </p>
         </div>
       </div>
       <div className="grid w-full shrink-0 grid-cols-3 gap-2 text-left sm:w-80">
@@ -34,7 +42,7 @@ export function ProfileBanner({
         </div>
         <div className="rounded-2xl border border-rose-200 bg-rose-50 px-3 py-3">
           <p className="font-mono text-xl font-bold text-rose-700">{lostCount}</p>
-          <p className="mt-1.5 whitespace-nowrap text-[10.5px] text-rose-700">분실</p>
+          <p className="mt-1.5 whitespace-nowrap text-[10.5px] text-rose-700">분실중</p>
         </div>
         <div className="rounded-2xl border border-sky-200 bg-sky-50 px-3 py-3">
           <p className="font-mono text-xl font-bold text-sky-700">{returnedCount}</p>

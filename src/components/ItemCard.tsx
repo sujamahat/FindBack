@@ -11,6 +11,9 @@ export function ItemCard({
   status,
   photoUrl,
   reportCount,
+  description,
+  publicToken,
+  rewardAmount,
   onDeleted,
 }: {
   id: string;
@@ -19,6 +22,9 @@ export function ItemCard({
   status: ItemStatus;
   photoUrl: string | null;
   reportCount: number;
+  description?: string | null;
+  publicToken?: string;
+  rewardAmount?: number | null;
   onDeleted?: () => void;
 }) {
   return (
@@ -33,26 +39,35 @@ export function ItemCard({
         <div className="absolute left-2.5 top-2.5">
           <StatusBadge status={status} />
         </div>
-      </div>
-      <div className="flex flex-1 flex-col gap-1 px-1.5 pb-1 pt-3">
-        <p className="break-words text-[15px] font-bold leading-snug text-ink">{name}</p>
-        <p className="text-xs text-ink-soft">
-          {category} · 발견 제보 {reportCount}건
-        </p>
-        <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-line pt-3 mt-3">
-          <Link
-            href={`/items/${id}`}
-            className="whitespace-nowrap rounded-xl bg-brand px-3.5 py-2 text-xs font-bold text-white transition hover:bg-brand-deep"
-          >
-            관리하기
-          </Link>
+        <div className="absolute right-2.5 top-2.5 flex items-center gap-1.5">
           <Link
             href={`/items/${id}/tag`}
-            className="whitespace-nowrap rounded-xl border border-brand-line px-3.5 py-2 text-xs font-bold text-brand-deep transition hover:bg-brand-soft"
+            aria-label="QR 태그 보기"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-surface/90 text-brand-deep shadow-sm transition hover:bg-brand-soft"
           >
-            태그 보기
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM20 14v3M14 20h3M20 20v1" />
+            </svg>
           </Link>
-          {onDeleted && <DeleteItemButton itemId={id} onDeleted={onDeleted} variant="icon" />}
+          {onDeleted && <DeleteItemButton itemId={id} onDeleted={onDeleted} variant="icon-only" />}
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col gap-1 px-1.5 pb-1 pt-3">
+        <Link href={`/items/${id}`} className="break-words text-[15px] font-bold leading-snug text-ink hover:text-brand-deep">
+          {name}
+        </Link>
+        <p className="line-clamp-2 min-h-[2rem] text-xs text-ink-soft">
+          {description || `${category} · 발견 제보 ${reportCount}건`}
+        </p>
+        <div className="mt-3 flex items-center justify-between gap-2 border-t border-line pt-3">
+          <span className="truncate font-mono text-[11px] text-ink-mute">
+            {publicToken ? `#${publicToken.slice(0, 8)}` : ""}
+          </span>
+          {rewardAmount != null && (
+            <span className="shrink-0 text-sm font-black text-brand-deep">
+              ₩{rewardAmount.toLocaleString("ko-KR")}
+            </span>
+          )}
         </div>
       </div>
     </div>

@@ -12,6 +12,9 @@ export type DashboardItem = {
   status: ItemStatus;
   photoUrl: string | null;
   reportCount: number;
+  description: string | null;
+  publicToken: string;
+  rewardAmount: number | null;
 };
 
 export function ItemGrid({
@@ -56,12 +59,12 @@ export function ItemGrid({
                 : "border-line bg-surface text-ink-soft hover:border-rose-200 hover:text-rose-700"
             }`}
           >
-            분실
+            분실중
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {shown.map((item) => (
           <ItemCard
             key={item.id}
@@ -71,6 +74,9 @@ export function ItemGrid({
             status={item.status}
             photoUrl={item.photoUrl}
             reportCount={item.reportCount}
+            description={item.description}
+            publicToken={item.publicToken}
+            rewardAmount={item.rewardAmount}
             onDeleted={readOnly ? undefined : () => handleDeleted(item.id)}
           />
         ))}
@@ -83,7 +89,7 @@ export function ItemGrid({
             +
           </span>
           <span className="text-xs font-bold text-brand-deep">
-            {items.length === 0 ? "첫 물건 등록하기" : "새 물건 등록"}
+            새 물건 등록
           </span>
         </Link>
         )}

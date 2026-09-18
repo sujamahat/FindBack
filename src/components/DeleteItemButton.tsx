@@ -15,7 +15,7 @@ export function DeleteItemButton({
   onDeleted?: () => void;
   /** If set, navigates here after a successful delete (e.g. away from the now-gone detail page). */
   redirectTo?: string;
-  variant?: "icon" | "button";
+  variant?: "icon" | "icon-only" | "button";
 }) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -43,12 +43,14 @@ export function DeleteItemButton({
         onClick={() => setOpen(true)}
         aria-label="물건 삭제"
         className={
-          variant === "icon"
+          variant === "icon-only"
+            ? "flex h-8 w-8 items-center justify-center rounded-full bg-surface/90 text-sm shadow-sm transition hover:bg-rose-50"
+            : variant === "icon"
             ? "whitespace-nowrap rounded-xl border border-rose-200 px-3.5 py-2 text-xs font-bold text-rose-700 transition hover:bg-rose-50"
             : "rounded-xl border border-rose-200 px-4 py-2 text-sm font-bold text-rose-700 transition hover:bg-rose-50"
         }
       >
-        {variant === "icon" ? "🗑 삭제" : "🗑 삭제하기"}
+        {variant === "icon-only" ? "🗑" : variant === "icon" ? "🗑 삭제" : "🗑 삭제하기"}
       </button>
 
       {open && (

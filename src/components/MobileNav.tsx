@@ -22,9 +22,21 @@ const TABS = [
     match: (p: string) => p === "/store",
     icon: <path d="M3 8h18l-1.5 12h-15zM8.5 8V6a3.5 3.5 0 0 1 7 0v2" />,
   },
+  {
+    href: "/chat",
+    label: "채팅",
+    match: (p: string) => p === "/chat",
+    icon: <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" />,
+  },
+  {
+    href: "/mypage",
+    label: "마이",
+    match: (p: string) => p === "/mypage",
+    icon: <path d="M20 21a8 8 0 0 0-16 0M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />,
+  },
 ];
 
-const SHOW_ON = ["/dashboard", "/store", "/items"];
+const SHOW_ON = ["/dashboard", "/store", "/items", "/chat", "/mypage"];
 
 /** Phone-only bottom tab bar for the signed-in area. */
 export function MobileNav() {
@@ -41,7 +53,7 @@ export function MobileNav() {
         aria-label="주요 메뉴"
         className="no-print fixed inset-x-0 bottom-0 z-40 border-t border-line bg-surface/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl md:hidden"
       >
-        <ul className="mx-auto grid max-w-md grid-cols-3">
+        <ul className="mx-auto grid max-w-md grid-cols-5">
           {TABS.map((tab) => {
             const active = tab.match(pathname);
             return (

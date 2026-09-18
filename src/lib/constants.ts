@@ -16,7 +16,7 @@ export type ItemStatus = (typeof ITEM_STATUSES)[number];
 
 export const ITEM_STATUS_LABELS: Record<ItemStatus, string> = {
   safe: "보관중",
-  lost: "분실",
+  lost: "분실중",
   found: "발견 제보 도착",
   returned: "반환완료",
 };
