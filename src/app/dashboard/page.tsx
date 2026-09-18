@@ -48,15 +48,13 @@ export default async function DashboardPage() {
           returnedCount={returnedCount}
         />
 
-        <h1 className="mb-4 mt-8 text-xl font-bold text-navy">내 물건</h1>
-
         <ItemGrid initialItems={dashboardItems} />
       </main>
 
       <div className="no-print sticky bottom-4 z-10 mx-auto flex w-full max-w-4xl justify-center px-6">
         <Link
           href="/items/new"
-          className="w-full rounded-2xl bg-coral px-6 py-4 text-center text-base font-bold text-white shadow-lg transition active:scale-[0.98] sm:w-auto sm:px-10"
+          className="w-full rounded-2xl bg-brand px-6 py-4 text-center text-base font-bold text-white shadow-lg shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98] sm:w-auto sm:px-10"
         >
           + 새 물건 등록하기
         </Link>

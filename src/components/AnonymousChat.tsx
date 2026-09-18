@@ -54,20 +54,20 @@ export function AnonymousChat({ viewerRole }: { viewerRole: "owner" | "finder" }
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-sky bg-white">
+    <div className="overflow-hidden rounded-[24px] border border-line bg-white shadow-sm">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         className="flex w-full items-center justify-between px-4 py-3 text-left"
       >
-        <span className="font-bold text-navy">💬 익명 채팅 (Anonymous Chat)</span>
-        <span className="text-sm text-navy-soft">{open ? "접기 ▲" : "펼치기 ▼"}</span>
+        <span className="flex items-center gap-2 font-bold text-ink"><span className="h-2 w-2 rounded-full bg-brand ring-4 ring-brand/30" aria-hidden />익명 채팅 (Anonymous Chat)</span>
+        <span className="text-sm text-ink-soft">{open ? "접기 ▲" : "펼치기 ▼"}</span>
       </button>
 
       {open && (
-        <div className="border-t border-sky p-4">
-          <p className="mb-3 text-xs text-navy-soft">
+        <div className="border-t border-line p-4">
+          <p className="mb-3 text-xs text-ink-soft">
             🧪 프로토타입 채팅이에요 — 이 화면에서만 보이고, 새로고침하면 초기화돼요.
           </p>
           <div className="mb-3 flex max-h-72 flex-col gap-2 overflow-y-auto pr-1">
@@ -77,14 +77,14 @@ export function AnonymousChat({ viewerRole }: { viewerRole: "owner" | "finder" }
                 className={`flex ${m.from === viewerRole ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm ${
-                    m.from === viewerRole ? "bg-coral text-white" : "bg-sky/50 text-navy"
+                  className={`max-w-[75%] rounded-[18px] px-4 py-2 text-sm ${
+                    m.from === viewerRole ? "bg-brand text-white" : "bg-slate-100 text-ink"
                   }`}
                 >
                   <p>{m.text}</p>
                   <p
                     className={`mt-1 text-[10px] ${
-                      m.from === viewerRole ? "text-white/70" : "text-navy-soft"
+                      m.from === viewerRole ? "text-white/70" : "text-ink-soft"
                     }`}
                   >
                     {formatTime(m.at)}
@@ -99,11 +99,11 @@ export function AnonymousChat({ viewerRole }: { viewerRole: "owner" | "finder" }
               onChange={(e) => setDraft(e.target.value)}
               placeholder="메시지를 입력하세요"
               maxLength={300}
-              className="flex-1 rounded-xl border border-sky px-3 py-2 text-sm text-navy outline-none focus:border-navy"
+              className="flex-1 rounded-xl border border-line px-3 py-2 text-sm text-ink outline-none focus:border-brand focus:ring-4 focus:ring-brand/20"
             />
             <button
               type="submit"
-              className="rounded-xl bg-navy px-4 py-2 text-sm font-bold text-cream"
+              className="rounded-xl bg-brand px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-deep"
             >
               전송
             </button>

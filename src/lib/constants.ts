@@ -24,10 +24,10 @@ export const ITEM_STATUS_LABELS: Record<ItemStatus, string> = {
 // Karrot(당근마켓)-style status coloring: green/orange/blue for the three
 // core states, plus a distinct accent for "found" (needs owner attention).
 export const ITEM_STATUS_BADGE_STYLE: Record<ItemStatus, string> = {
-  safe: "bg-green-100 text-green-700",
-  lost: "bg-orange-100 text-orange-700",
-  found: "bg-coral text-white",
-  returned: "bg-blue-100 text-blue-700",
+  safe: "border border-brand-line bg-brand-soft text-brand-deep",
+  lost: "border border-rose-200 bg-rose-50 text-rose-700",
+  found: "border border-brand bg-brand text-white",
+  returned: "border border-sky-200 bg-sky-50 text-sky-700",
 };
 
 export const RETURN_METHODS = [

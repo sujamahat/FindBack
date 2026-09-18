@@ -16,28 +16,29 @@ export function ProfileBanner({
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
-    <div className="rounded-2xl bg-navy p-5 text-cream">
-      <div className="flex items-center gap-4">
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-coral text-xl font-bold text-white">
+    <div className="flex flex-col gap-4 rounded-[26px] border border-line bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex min-w-0 items-center gap-4">
+        <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-soft text-xl font-black text-brand-deep">
           {initial}
+          <span className="absolute -bottom-0.5 -right-0.5 h-[18px] w-[18px] rounded-full border-[3px] border-white bg-brand ring-[3px] ring-brand/30" />
         </div>
         <div className="min-w-0">
-          <p className="truncate font-bold">{displayName}</p>
-          <p className="truncate text-xs text-cream/70">{email}</p>
+          <p className="truncate text-[19px] font-black tracking-tight text-ink">{displayName}</p>
+          <p className="mt-1 truncate font-mono text-xs text-ink-mute">{email}</p>
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-xl bg-white/10 py-3">
-          <p className="text-lg font-bold">{total}</p>
-          <p className="text-[11px] text-cream/70">전체 물건</p>
+      <div className="grid grid-cols-3 gap-2 text-left sm:w-80">
+        <div className="rounded-2xl border border-line bg-slate-50 px-3.5 py-3">
+          <p className="font-mono text-xl font-bold text-ink">{total}</p>
+          <p className="mt-1.5 text-[10.5px] text-ink-soft">등록</p>
         </div>
-        <div className="rounded-xl bg-white/10 py-3">
-          <p className="text-lg font-bold text-orange-300">{lostCount}</p>
-          <p className="text-[11px] text-cream/70">분실중</p>
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 px-3.5 py-3">
+          <p className="font-mono text-xl font-bold text-rose-700">{lostCount}</p>
+          <p className="mt-1.5 text-[10.5px] text-rose-700">분실중</p>
         </div>
-        <div className="rounded-xl bg-white/10 py-3">
-          <p className="text-lg font-bold text-sky-300">{returnedCount}</p>
-          <p className="text-[11px] text-cream/70">반환완료</p>
+        <div className="rounded-2xl border border-sky-200 bg-sky-50 px-3.5 py-3">
+          <p className="font-mono text-xl font-bold text-sky-700">{returnedCount}</p>
+          <p className="mt-1.5 text-[10.5px] text-sky-700">반환완료</p>
         </div>
       </div>
     </div>
