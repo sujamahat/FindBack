@@ -74,6 +74,26 @@ Development log for FindBack, built for the GDGoC Korea University BYPP hackatho
     `latitude`/`longitude` columns, since Supabase's migration ordering is
     filename-based and the original undated filename would have sorted
     before any numerically-prefixed follow-up.
+13. **Judging-demo front-end flows** — Explicitly requested as UI-only demo
+    props for a live pitch, not real infrastructure: (a) `AnonymousChat`
+    (shared component, component-local state only, no table/realtime
+    channel) on both `/items/[id]` and `/f/[publicToken]`; (b) `/store`, a
+    static product grid with a simulated Toss/KakaoPay-style checkout modal
+    (no payment gateway, no order persistence); (c) a reward-amount field
+    that *is* really persisted (`items.reward_amount`, new migration
+    `20260920000000_add_item_reward_amount.sql`) so the banner shows
+    correctly across devices during a demo, but whose "보상금 수령 신청"
+    button only shows a simulated success banner — no payout backend exists.
+    Every one of these carries an explicit in-UI disclaimer that it's a
+    demo/prototype, so the code doesn't quietly misrepresent what's real if
+    it's ever read outside the pitch context.
+14. **Item deletion** — `deleteItemAction` (owner-scoped delete, relies on
+    the existing `on delete cascade` from found_reports/item_status_events
+    to items) plus a shared `DeleteItemButton` confirm-modal component. The
+    dashboard's item list was lifted into a client component (`ItemGrid`)
+    so a delete removes the card from view immediately, without a page
+    reload; the item detail page instead redirects to `/dashboard` since
+    the page it's on no longer exists after deletion.
 
 ## Important decisions
 
@@ -109,6 +129,16 @@ Development log for FindBack, built for the GDGoC Korea University BYPP hackatho
   reduce finder friction. Trade-off: a report can now be submitted with no
   text location and no shared GPS (only a `return_method`) — accepted as-is
   per the request, not defended against with an added cross-field rule.
+- **Chat and payments were originally on the spec's explicit "don't build
+  yet" list (Section 20 scope protection), gated behind "until the
+  acceptance tests pass."** Those tests already pass, and the request was
+  explicit that these are front-end demo flows for a judging presentation
+  ("no real external payment APIs required") — not a request to build real
+  messaging or payment infrastructure. Implemented accordingly: chat is
+  component-local state with no backend, checkout is a static/simulated
+  modal, and the one genuinely persisted piece (`reward_amount`) is just a
+  display number, not a payments feature. Every demo affordance says so
+  in its own UI copy, not just in this log.
 
 ## Commands used
 

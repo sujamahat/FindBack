@@ -41,6 +41,9 @@ export default function LandingPage() {
             습득물 코드 입력하기
           </Link>
         </div>
+        <Link href="/store" className="text-sm font-semibold text-navy-soft underline">
+          QR 태그 구매 →
+        </Link>
       </section>
 
       <section className="mx-auto max-w-3xl px-6 py-10">

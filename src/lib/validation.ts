@@ -20,6 +20,15 @@ function optionalCoordinate(min: number, max: number, message: string) {
   );
 }
 
+// Same empty-string/null normalization, for the demo-only reward amount
+// (a plain display number — see the reward_amount migration comment).
+export function optionalAmount(max: number, message: string) {
+  return z.preprocess(
+    (value) => (value === "" || value === null || value === undefined ? undefined : value),
+    z.coerce.number().int(message).min(0, message).max(max, message).optional()
+  );
+}
+
 export const itemFormSchema = z.object({
   name: z
     .string()
@@ -32,6 +41,8 @@ export const itemFormSchema = z.object({
   description: optionalText(300, "설명은 300자 이내로 입력해주세요."),
   returnInstructions: optionalText(200, "반환 안내는 200자 이내로 입력해주세요."),
   photoUrl: z.string().url().optional().nullable().or(z.literal("")),
+  // Demo-only display amount — see reward_amount migration comment.
+  rewardAmount: optionalAmount(10_000_000, "보상금은 0원 이상 1천만원 이하로 입력해주세요."),
 });
 
 export type ItemFormInput = z.infer<typeof itemFormSchema>;
@@ -68,6 +79,10 @@ export const reportFormRefined = reportFormSchema.superRefine((data, ctx) => {
       path: ["customReturnPlace"],
     });
   }
+});
+
+export const rewardAmountSchema = z.object({
+  rewardAmount: optionalAmount(10_000_000, "보상금은 0원 이상 1천만원 이하로 입력해주세요."),
 });
 
 export const recoverCodeSchema = z.object({

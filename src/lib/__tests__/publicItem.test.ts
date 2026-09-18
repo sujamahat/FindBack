@@ -13,12 +13,13 @@ const fullRow: Database["public"]["Tables"]["items"]["Row"] = {
   return_instructions: "학생회관 안내데스크에 맡겨주세요",
   photo_url: "https://example.com/photo.jpg",
   status: "safe",
+  reward_amount: 20000,
   created_at: "2026-01-01T00:00:00.000Z",
   updated_at: "2026-01-01T00:00:00.000Z",
 };
 
 describe("toPublicItemView", () => {
-  it("only exposes name, category, description, return instructions, photo, and status", () => {
+  it("only exposes name, category, description, return instructions, photo, status, and reward amount", () => {
     const view = toPublicItemView(fullRow);
     expect(view).toEqual({
       name: "하늘색 우산",
@@ -27,6 +28,7 @@ describe("toPublicItemView", () => {
       returnInstructions: "학생회관 안내데스크에 맡겨주세요",
       photoUrl: "https://example.com/photo.jpg",
       status: "safe",
+      rewardAmount: 20000,
     });
   });
 

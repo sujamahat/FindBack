@@ -42,8 +42,9 @@ src/
     statusTransitions.ts  상태 전이 규칙
     notifications/email.ts  이메일 알림 추상화 (Resend, 선택)
 supabase/migrations/
-  20260918000000_initial_schema.sql       전체 스키마 + RLS + 스토리지 정책
-  20260919000000_add_report_geolocation.sql  제보 GPS 좌표(선택) 컬럼 추가
+  20260918000000_initial_schema.sql              전체 스키마 + RLS + 스토리지 정책
+  20260919000000_add_report_geolocation.sql      제보 GPS 좌표(선택) 컬럼 추가
+  20260920000000_add_item_reward_amount.sql      물건 보상금(선택, 데모용) 컬럼 추가
 ```
 
 ## 로컬 개발 환경 설정
@@ -71,7 +72,7 @@ supabase link --project-ref YOUR-PROJECT-REF
 supabase db push
 ```
 
-CLI가 없다면 Supabase 대시보드의 **SQL Editor**에 `supabase/migrations/` 안의 두 파일을 **파일명 순서대로**(`20260918000000_initial_schema.sql` 다음 `20260919000000_add_report_geolocation.sql`) 그대로 붙여넣어 실행해도 동일합니다.
+CLI가 없다면 Supabase 대시보드의 **SQL Editor**에 `supabase/migrations/` 안의 파일들을 **파일명 순서대로**(타임스탬프 오름차순) 그대로 붙여넣어 실행해도 동일합니다.
 
 ## 환경 변수
 
@@ -112,6 +113,10 @@ CLI가 없다면 Supabase 대시보드의 **SQL Editor**에 `supabase/migrations
 - 습득자 제보 사진 업로드는 서버 라우트를 통해서만 가능하며(최대 5MB, 이미지 파일만), 별도 이미지 최적화/리사이즈는 하지 않습니다.
 - 다국어(영/한) 토글은 아직 구현되지 않았습니다 — 문자열이 `src/lib/constants.ts`와 각 컴포넌트에 모여 있어 이후 `next-intl` 등으로 쉽게 확장 가능한 구조로 작성했습니다.
 - 중복 제보 방지는 클라이언트 측 "제출 후 폼 숨김" + 서버 레이트 리밋 수준이며, DB 레벨의 강한 유니크 제약은 없습니다.
+- **다음 세 기능은 발표/시연용 프론트엔드 데모이며, 실제 서비스 로직과 연동되어 있지 않습니다:**
+  - **익명 채팅** (`/items/[id]`, `/f/[publicToken]`): 컴포넌트 로컬 state만 사용합니다. 메시지는 저장되지 않고, 양쪽 기기 간 실시간으로 전달되지 않으며, 새로고침하면 초기화됩니다.
+  - **QR 태그 스토어** (`/store`): 상품 목록은 정적 데이터이고, "구매하기"를 누르면 토스/카카오페이 스타일의 결제 완료 화면을 흉내만 냅니다. 실제 결제사와 연동되어 있지 않으며 어떤 결제도 발생하지 않습니다.
+  - **보상금 수령 신청** (`/f/[publicToken]`): 보상금 금액 자체는 `items.reward_amount`에 실제로 저장되어 여러 기기에서 동일하게 보이지만, 습득자가 "보상금 수령 신청"을 눌렀을 때 뜨는 성공 배너는 화면 연출일 뿐이며 실제 송금은 이루어지지 않습니다.
 
 ## 데모 방법 (가장 빠른 전체 흐름 테스트)
 

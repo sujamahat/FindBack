@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { StatusBadge } from "@/components/StatusBadge";
+import { DeleteItemButton } from "@/components/DeleteItemButton";
 import type { ItemStatus } from "@/lib/constants";
 
 export function ItemCard({
@@ -9,6 +10,7 @@ export function ItemCard({
   status,
   photoUrl,
   reportCount,
+  onDeleted,
 }: {
   id: string;
   name: string;
@@ -16,6 +18,7 @@ export function ItemCard({
   status: ItemStatus;
   photoUrl: string | null;
   reportCount: number;
+  onDeleted?: () => void;
 }) {
   return (
     <div className="flex gap-4 rounded-2xl border border-sky bg-white p-4 shadow-sm">
@@ -51,6 +54,7 @@ export function ItemCard({
           >
             태그 보기
           </Link>
+          {onDeleted && <DeleteItemButton itemId={id} onDeleted={onDeleted} variant="icon" />}
         </div>
       </div>
     </div>

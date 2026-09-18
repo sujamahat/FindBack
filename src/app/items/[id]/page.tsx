@@ -2,10 +2,13 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { AppHeader } from "@/components/AppHeader";
 import { StatusBadge } from "@/components/StatusBadge";
+import { AnonymousChat } from "@/components/AnonymousChat";
+import { DeleteItemButton } from "@/components/DeleteItemButton";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { ItemStatus } from "@/lib/constants";
 import { StatusActions } from "./StatusActions";
 import { RealtimeReports } from "./RealtimeReports";
+import { RewardEditor } from "./RewardEditor";
 
 type TimelineEntry = { label: string; at: string; emoji: string };
 
@@ -94,11 +97,16 @@ export default async function ItemDetailPage({
                 QR 태그 보기 / 인쇄
               </Link>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 flex flex-wrap items-center gap-2">
               <StatusActions itemId={item.id} status={item.status as ItemStatus} />
+              <DeleteItemButton itemId={item.id} redirectTo="/dashboard" variant="icon" />
             </div>
           </div>
         </div>
+
+        <section className="mt-6">
+          <RewardEditor itemId={item.id} initialAmount={item.reward_amount} />
+        </section>
 
         <section className="mt-10">
           <h2 className="mb-3 text-lg font-bold text-navy">타임라인</h2>
@@ -118,6 +126,10 @@ export default async function ItemDetailPage({
         <section className="mt-10">
           <h2 className="mb-3 text-lg font-bold text-navy">발견 제보</h2>
           <RealtimeReports itemId={item.id} initialReports={reports ?? []} />
+        </section>
+
+        <section className="mt-10">
+          <AnonymousChat viewerRole="owner" />
         </section>
       </main>
     </>

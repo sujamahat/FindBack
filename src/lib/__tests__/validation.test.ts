@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { itemFormSchema, recoverCodeSchema, reportFormRefined } from "@/lib/validation";
+import {
+  itemFormSchema,
+  recoverCodeSchema,
+  reportFormRefined,
+  rewardAmountSchema,
+} from "@/lib/validation";
 
 describe("itemFormSchema", () => {
   it("accepts a minimal valid item", () => {
@@ -106,6 +111,32 @@ describe("reportFormRefined", () => {
     expect(reportFormRefined.safeParse({ ...base, latitude: "999", longitude: "0" }).success).toBe(
       false
     );
+  });
+});
+
+describe("rewardAmountSchema", () => {
+  it("treats an empty string as no reward set", () => {
+    const result = rewardAmountSchema.safeParse({ rewardAmount: "" });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.rewardAmount).toBeUndefined();
+  });
+
+  it("treats null (FormData.get() default) as no reward set", () => {
+    expect(rewardAmountSchema.safeParse({ rewardAmount: null }).success).toBe(true);
+  });
+
+  it("accepts a plausible reward amount", () => {
+    const result = rewardAmountSchema.safeParse({ rewardAmount: "20000" });
+    expect(result.success).toBe(true);
+    if (result.success) expect(result.data.rewardAmount).toBe(20000);
+  });
+
+  it("rejects a negative amount", () => {
+    expect(rewardAmountSchema.safeParse({ rewardAmount: "-1" }).success).toBe(false);
+  });
+
+  it("rejects an amount above the cap", () => {
+    expect(rewardAmountSchema.safeParse({ rewardAmount: "20000000" }).success).toBe(false);
   });
 });
 

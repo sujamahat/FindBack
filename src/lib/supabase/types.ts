@@ -15,6 +15,7 @@ export interface Database {
           return_instructions: string | null;
           photo_url: string | null;
           status: ItemStatus;
+          reward_amount: number | null;
           created_at: string;
           updated_at: string;
         };
@@ -29,6 +30,7 @@ export interface Database {
           return_instructions?: string | null;
           photo_url?: string | null;
           status?: ItemStatus;
+          reward_amount?: number | null;
           created_at?: string;
           updated_at?: string;
         };

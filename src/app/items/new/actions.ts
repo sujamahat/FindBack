@@ -31,6 +31,7 @@ export async function createItemAction(
     description: formData.get("description"),
     returnInstructions: formData.get("returnInstructions"),
     photoUrl: formData.get("photoUrl"),
+    rewardAmount: formData.get("rewardAmount"),
   });
 
   if (!parsed.success) {
@@ -42,7 +43,7 @@ export async function createItemAction(
     return { error: "입력값을 확인해주세요.", fieldErrors };
   }
 
-  const { name, category, description, returnInstructions, photoUrl } = parsed.data;
+  const { name, category, description, returnInstructions, photoUrl, rewardAmount } = parsed.data;
 
   let itemId: string | null = null;
   let lastError: string | null = null;
@@ -59,6 +60,7 @@ export async function createItemAction(
         description: description || null,
         return_instructions: returnInstructions || null,
         photo_url: photoUrl || null,
+        reward_amount: rewardAmount ?? null,
       })
       .select("id")
       .single();

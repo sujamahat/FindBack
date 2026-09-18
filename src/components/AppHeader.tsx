@@ -11,6 +11,9 @@ export function AppHeader({ email }: { email?: string | null }) {
           FindBack
         </Link>
         <div className="flex items-center gap-3">
+          <Link href="/store" className="text-sm font-semibold text-navy-soft">
+            QR 태그 구매
+          </Link>
           {email && <span className="hidden text-xs text-navy-soft sm:inline">{email}</span>}
           <form action={signOutAction}>
             <button type="submit" className="text-sm font-semibold text-navy-soft underline">

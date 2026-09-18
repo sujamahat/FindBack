@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import { Mascot } from "@/components/Mascot";
 import { StatusBadge } from "@/components/StatusBadge";
+import { AnonymousChat } from "@/components/AnonymousChat";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { toPublicItemView } from "@/lib/publicItem";
 import type { ItemStatus } from "@/lib/constants";
 import { FinderForm } from "./FinderForm";
+import { RewardBanner } from "./RewardBanner";
 
 export default async function FinderPage({
   params,
@@ -71,12 +73,18 @@ export default async function FinderPage({
         )}
       </div>
 
+      {publicItem.rewardAmount != null && <RewardBanner rewardAmount={publicItem.rewardAmount} />}
+
       <div className="my-6 rounded-2xl bg-navy p-4 text-sm text-cream">
         이 페이지는 연락처, 카메라 또는 위치 정보에 자동으로 접근하지 않습니다. 작성한 정보만
         물건의 주인에게 전달됩니다.
       </div>
 
       <FinderForm publicToken={publicToken} />
+
+      <div className="mt-6">
+        <AnonymousChat viewerRole="finder" />
+      </div>
     </main>
   );
 }

@@ -118,6 +118,25 @@ export function NewItemForm({ userId }: { userId: string }) {
         />
       </label>
 
+      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
+        보상금 (선택, 데모용)
+        <input
+          name="rewardAmount"
+          type="number"
+          min={0}
+          max={10_000_000}
+          step={1000}
+          placeholder="예: 20000"
+          className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
+        />
+        <span className="text-xs font-normal text-navy-soft">
+          습득자 페이지에 보여줄 보상금이에요. 실제 결제는 연동되어 있지 않은 데모 기능이에요.
+        </span>
+        {state.fieldErrors?.rewardAmount && (
+          <span className="text-xs font-semibold text-coral">{state.fieldErrors.rewardAmount}</span>
+        )}
+      </label>
+
       {state.error && (
         <p className="rounded-xl bg-coral-soft px-4 py-3 text-sm font-semibold text-coral">
           {state.error}
