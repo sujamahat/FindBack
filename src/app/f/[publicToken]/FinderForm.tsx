@@ -66,7 +66,7 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
 
   if (status === "done") {
     return (
-      <div className="rounded-[24px] border border-line bg-white p-6 text-center">
+      <div className="rounded-[24px] border border-line bg-surface p-6 text-center">
         <p className="text-3xl">🙏</p>
         <p className="mt-2 font-bold text-ink">
           제보가 전달되었습니다. 물건을 안전하게 보관 장소에 맡겨주셔서 감사합니다.
@@ -88,12 +88,12 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
       <input type="hidden" name="latitude" value={coords?.lat ?? ""} />
       <input type="hidden" name="longitude" value={coords?.lng ?? ""} />
 
-      <div className="flex flex-col gap-2 rounded-xl border border-dashed border-brand-line bg-white p-4">
+      <div className="flex flex-col gap-2 rounded-xl border border-dashed border-brand-line bg-surface p-4">
         <button
           type="button"
           onClick={handleShareLocation}
           disabled={geoStatus === "loading"}
-          className="rounded-xl border border-brand-line bg-white px-4 py-3 text-sm font-bold text-brand-deep transition hover:bg-brand-soft disabled:opacity-60"
+          className="rounded-xl border border-brand-line bg-surface px-4 py-3 text-sm font-bold text-brand-deep transition hover:bg-brand-soft disabled:opacity-60"
         >
           📍 내 위치 공유하기 (선택)
         </button>
@@ -142,7 +142,7 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
           onChange={(e) => setLocationText(e.target.value)}
           maxLength={200}
           placeholder="예: 중앙도서관 2층 열람실"
-          className="rounded-xl border border-line bg-white px-4 py-3 text-base text-ink outline-none focus:border-brand"
+          className="fb-input"
         />
         {fieldErrors.locationText && (
           <span className="text-xs font-semibold text-rose-700">{fieldErrors.locationText}</span>
@@ -155,7 +155,7 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
           <label
             key={method}
             className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium ${
-              returnMethod === method ? "border-brand bg-brand-soft" : "border-line bg-white"
+              returnMethod === method ? "border-brand bg-brand-soft" : "border-line bg-surface"
             }`}
           >
             <input
@@ -181,7 +181,7 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
             name="customReturnPlace"
             maxLength={200}
             placeholder="예: 학생회관 1층 분실물함"
-            className="rounded-xl border border-line bg-white px-4 py-3 text-base text-ink outline-none focus:border-brand"
+            className="fb-input"
           />
           {fieldErrors.customReturnPlace && (
             <span className="text-xs font-semibold text-rose-700">
@@ -216,13 +216,13 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
           maxLength={500}
           rows={3}
           placeholder="주인에게 남기고 싶은 메시지"
-          className="rounded-xl border border-line bg-white px-4 py-3 text-base text-ink outline-none focus:border-brand"
+          className="fb-input"
         />
       </div>
 
       <div>
         <label className="mb-2 block text-sm font-semibold text-ink">사진 (선택)</label>
-        <label className="flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-[24px] border-2 border-dashed border-brand-line bg-white">
+        <label className="flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-[24px] border-2 border-dashed border-brand-line bg-surface">
           {photoPreview ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={photoPreview} alt="미리보기" className="h-full w-full object-cover" />

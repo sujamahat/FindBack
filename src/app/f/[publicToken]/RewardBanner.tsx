@@ -36,7 +36,7 @@ export function RewardBanner({ rewardAmount }: { rewardAmount: number }) {
         </button>
       ) : (
         <div
-          className={`mt-3 rounded-xl border border-brand-line bg-white px-4 py-3 text-sm font-bold text-brand-deep transition-all duration-300 ease-out ${
+          className={`mt-3 rounded-xl border border-brand-line bg-surface px-4 py-3 text-sm font-bold text-brand-deep transition-all duration-300 ease-out ${
             visible ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
           }`}
         >

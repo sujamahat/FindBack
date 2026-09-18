@@ -57,7 +57,7 @@ export function DeleteItemButton({
           onClick={() => !isPending && setOpen(false)}
         >
           <div
-            className="w-full max-w-sm rounded-[26px] border border-line bg-white p-6 text-center shadow-xl"
+            className="w-full max-w-sm rounded-[26px] border border-line bg-surface p-6 text-center shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-3xl">🗑️</p>

@@ -71,7 +71,7 @@ export function RealtimeReports({
 
   if (reports.length === 0) {
     return (
-      <p className="rounded-2xl border border-dashed border-sky bg-white p-6 text-center text-sm text-navy-soft">
+      <p className="rounded-2xl border border-dashed border-sky bg-surface p-6 text-center text-sm text-navy-soft">
         아직 발견 제보가 없어요. QR 태그를 물건에 붙여두면 여기에 도착해요.
       </p>
     );
@@ -80,7 +80,7 @@ export function RealtimeReports({
   return (
     <ul className="flex flex-col gap-3">
       {reports.map((report) => (
-        <li key={report.id} className="rounded-2xl border border-sky bg-white p-4">
+        <li key={report.id} className="rounded-2xl border border-sky bg-surface p-4">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-navy-soft">
               {new Date(report.created_at).toLocaleString("ko-KR")}

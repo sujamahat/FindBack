@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { PublicHeader } from "@/components/PublicHeader";
 import { StatusBadge } from "@/components/StatusBadge";
 import { AnonymousChat } from "@/components/AnonymousChat";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
@@ -28,12 +29,10 @@ export default async function FinderPage({
   const publicItem = toPublicItemView(item);
 
   return (
+    <>
+    <PublicHeader />
     <main className="mx-auto w-full max-w-md flex-1 px-6 py-8">
       <div className="mb-6 flex flex-col items-center gap-2 text-center">
-        <div className="flex items-center gap-2.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-brand ring-4 ring-brand/30" aria-hidden />
-          <span className="text-[17px] font-black tracking-tight text-ink">FindBack</span>
-        </div>
         <p className="text-sm font-semibold text-ink-soft">분실물 제보</p>
         <div className="flex flex-wrap justify-center gap-2">
           <span className="rounded-full border border-brand-line bg-brand-soft px-3 py-1 text-xs font-bold text-brand-deep">
@@ -45,7 +44,7 @@ export default async function FinderPage({
         </div>
       </div>
 
-      <div className="rounded-[24px] border border-line bg-white p-5 shadow-sm">
+      <div className="rounded-[24px] border border-line bg-surface p-5 shadow-sm">
         <div className="flex gap-4">
           <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[18px] bg-brand-soft">
             {publicItem.photoUrl ? (
@@ -88,5 +87,6 @@ export default async function FinderPage({
         <AnonymousChat viewerRole="finder" />
       </div>
     </main>
+    </>
   );
 }

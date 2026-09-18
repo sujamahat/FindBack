@@ -35,7 +35,7 @@ export function ItemGrid({ initialItems }: { initialItems: DashboardItem[] }) {
             className={`rounded-full border px-3.5 py-2 text-[11.5px] font-bold transition ${
               filter === "all"
                 ? "border-brand bg-brand text-white shadow-sm"
-                : "border-line bg-white text-ink-soft hover:border-brand-line hover:text-brand-deep"
+                : "border-line bg-surface text-ink-soft hover:border-brand-line hover:text-brand-deep"
             }`}
           >
             전체
@@ -46,7 +46,7 @@ export function ItemGrid({ initialItems }: { initialItems: DashboardItem[] }) {
             className={`rounded-full border px-3.5 py-2 text-[11.5px] font-bold transition ${
               filter === "lost"
                 ? "border-brand bg-brand text-white shadow-sm"
-                : "border-line bg-white text-ink-soft hover:border-rose-200 hover:text-rose-700"
+                : "border-line bg-surface text-ink-soft hover:border-rose-200 hover:text-rose-700"
             }`}
           >
             분실중
@@ -71,7 +71,7 @@ export function ItemGrid({ initialItems }: { initialItems: DashboardItem[] }) {
           href="/items/new"
           className="flex min-h-[200px] flex-col items-center justify-center gap-2.5 rounded-[24px] border border-dashed border-brand-line bg-brand-soft transition hover:border-brand"
         >
-          <span className="flex h-11 w-11 items-center justify-center rounded-full border border-brand-line bg-white text-2xl font-bold text-brand ring-4 ring-brand/30">
+          <span className="flex h-11 w-11 items-center justify-center rounded-full border border-brand-line bg-surface text-2xl font-bold text-brand ring-4 ring-brand/30">
             +
           </span>
           <span className="text-xs font-bold text-brand-deep">

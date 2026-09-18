@@ -54,7 +54,7 @@ export function AnonymousChat({ viewerRole }: { viewerRole: "owner" | "finder" }
   }
 
   return (
-    <div className="overflow-hidden rounded-[24px] border border-line bg-white shadow-sm">
+    <div className="overflow-hidden rounded-[24px] border border-line bg-surface shadow-sm">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}

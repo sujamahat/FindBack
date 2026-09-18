@@ -60,9 +60,9 @@ export function LoginForm({ next }: { next: string }) {
 
   if (status === "sent") {
     return (
-      <div className="rounded-2xl border border-sky bg-white p-6 text-center">
-        <p className="font-bold text-navy">이메일을 확인해주세요</p>
-        <p className="mt-2 text-sm text-navy-soft">
+      <div className="rounded-[26px] border border-brand-line bg-brand-soft p-6 text-center">
+        <p className="font-black text-brand-deep">이메일을 확인해주세요</p>
+        <p className="mt-2 text-sm text-ink-soft">
           {email}로 {mode === "signin" ? "로그인" : "회원가입"} 링크를 보냈어요. 메일함(스팸함
           포함)을 확인해주세요.
         </p>
@@ -71,16 +71,16 @@ export function LoginForm({ next }: { next: string }) {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-2 gap-2 rounded-2xl bg-sky/40 p-1">
+    <div className="flex flex-col gap-4 rounded-[26px] border border-line bg-surface p-6 shadow-sm">
+      <div className="grid grid-cols-2 gap-1 rounded-2xl border border-line bg-background p-1">
         {(["signin", "signup"] as const).map((m) => (
           <button
             key={m}
             type="button"
             onClick={() => switchMode(m)}
             aria-pressed={mode === m}
-            className={`rounded-xl px-4 py-2 text-sm font-bold transition ${
-              mode === m ? "bg-white text-navy shadow-sm" : "text-navy-soft"
+            className={`rounded-xl px-4 py-2.5 text-sm font-bold transition ${
+              mode === m ? "bg-brand text-white shadow-sm" : "text-ink-soft hover:text-brand-deep"
             }`}
           >
             {MODE_COPY[m].tab}
@@ -89,7 +89,7 @@ export function LoginForm({ next }: { next: string }) {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
+        <label className="flex flex-col gap-2 text-sm font-bold text-ink">
           이메일 주소
           <input
             type="email"
@@ -98,18 +98,18 @@ export function LoginForm({ next }: { next: string }) {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
+            className="fb-input"
           />
         </label>
-        {error && <p className="text-sm font-semibold text-coral">{error}</p>}
+        {error && <p className="text-sm font-semibold text-rose-700">{error}</p>}
         <button
           type="submit"
           disabled={status === "sending"}
-          className="rounded-2xl bg-coral px-6 py-4 text-base font-bold text-white shadow-sm transition active:scale-[0.98] disabled:opacity-60"
+          className="rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98] disabled:opacity-60"
         >
           {status === "sending" ? MODE_COPY[mode].sendingButton : MODE_COPY[mode].button}
         </button>
-        <p className="text-center text-xs text-navy-soft">
+        <p className="text-center text-xs text-ink-mute">
           비밀번호가 필요 없어요. {mode === "signin" ? "로그인" : "회원가입"} 모두 이메일로 받는
           매직링크(Supabase Auth)로 진행돼요.
         </p>

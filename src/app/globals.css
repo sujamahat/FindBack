@@ -18,10 +18,45 @@
   --color-ink-soft: #64748b;
   --color-ink-mute: #94a3b8;
   --color-line: #e2e8f0;
+  --color-surface: #ffffff;
 
-  --background: var(--color-cream);
-  --foreground: var(--color-navy);
+  --background: #f8fafc;
+  --foreground: var(--color-ink);
 }
+
+/* Dark theme (FindBack v3 dark): toggled via the `dark` class on <html>.
+   Legacy navy/cream/sky tokens and the slate/rose/sky palette steps used by
+   the restyled pages are remapped so every page stays legible. */
+:root.dark {
+  color-scheme: dark;
+  --background: #080a0f;
+  --color-surface: #0d111a;
+  --color-line: #1e2638;
+  --color-ink: #f8fafc;
+  --color-ink-soft: #94a3b8;
+  --color-ink-mute: #64748b;
+  --color-brand-deep: #34d399;
+  --color-brand-soft: rgba(16, 185, 129, 0.12);
+  --color-brand-line: rgba(16, 185, 129, 0.35);
+
+  --color-cream: #080a0f;
+  --color-navy: #f8fafc;
+  --color-navy-soft: #94a3b8;
+  --color-sky: #1e2638;
+  --color-sky-deep: #2b3650;
+  --color-coral-soft: rgba(255, 111, 94, 0.15);
+
+  --color-slate-50: #111827;
+  --color-slate-100: #1a2233;
+  --color-rose-50: rgba(244, 63, 94, 0.12);
+  --color-rose-200: rgba(244, 63, 94, 0.35);
+  --color-rose-700: #fb7185;
+  --color-sky-50: rgba(14, 165, 233, 0.12);
+  --color-sky-200: rgba(14, 165, 233, 0.35);
+  --color-sky-700: #38bdf8;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -41,6 +76,7 @@
   --color-ink-soft: var(--color-ink-soft);
   --color-ink-mute: var(--color-ink-mute);
   --color-line: var(--color-line);
+  --color-surface: var(--color-surface);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -49,6 +85,26 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+}
+
+/* Shared text input / select / textarea for auth and registration forms. */
+@utility fb-input {
+  width: 100%;
+  border-radius: 1rem;
+  border: 1px solid var(--color-line);
+  background-color: var(--color-surface);
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  &::placeholder {
+    color: var(--color-ink-mute);
+  }
+  &:focus {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+  }
 }
 
 @media print {

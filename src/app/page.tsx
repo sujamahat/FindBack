@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mascot } from "@/components/Mascot";
+import { PublicHeader } from "@/components/PublicHeader";
 
 const STEPS = [
   { title: "물건 등록", desc: "우산, 물병, 가방 등 물건 정보를 간단히 등록해요." },
@@ -16,7 +17,9 @@ const PRIVACY_POINTS = [
 
 export default function LandingPage() {
   return (
-    <main className="flex-1 bg-white">
+    <>
+    <PublicHeader />
+    <main className="flex-1 bg-surface">
       <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 pt-16 pb-10 text-center">
         <Mascot size={112} />
         <h1 className="text-2xl font-bold leading-snug text-ink sm:text-3xl">
@@ -36,7 +39,7 @@ export default function LandingPage() {
           </Link>
           <Link
             href="/recover"
-            className="flex-1 rounded-2xl border border-brand-line bg-white px-6 py-4 text-center text-base font-bold text-brand-deep transition hover:bg-brand-soft active:scale-[0.98]"
+            className="flex-1 rounded-2xl border border-brand-line bg-surface px-6 py-4 text-center text-base font-bold text-brand-deep transition hover:bg-brand-soft active:scale-[0.98]"
           >
             습득물 코드 입력하기
           </Link>
@@ -51,7 +54,7 @@ export default function LandingPage() {
           {STEPS.map((step, i) => (
             <li
               key={step.title}
-              className="rounded-[24px] border border-line bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:border-brand-line"
+              className="rounded-[24px] border border-line bg-surface p-5 text-left shadow-sm transition hover:-translate-y-1 hover:border-brand-line"
             >
               <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-brand-soft text-sm font-bold text-brand-deep ring-4 ring-brand/30">
                 {i + 1}
@@ -77,5 +80,6 @@ export default function LandingPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }

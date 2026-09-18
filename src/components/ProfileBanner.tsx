@@ -16,7 +16,7 @@ export function ProfileBanner({
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
-    <div className="flex flex-col gap-4 rounded-[26px] border border-line bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+    <div className="flex flex-col gap-4 rounded-[26px] border border-line bg-surface p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between">
       <div className="flex min-w-0 items-center gap-4">
         <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-soft text-xl font-black text-brand-deep">
           {initial}

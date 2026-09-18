@@ -21,7 +21,7 @@ export function ItemCard({
   onDeleted?: () => void;
 }) {
   return (
-    <div className="flex gap-4 rounded-[24px] border border-line bg-white p-3 shadow-sm transition hover:-translate-y-1 hover:border-brand-line">
+    <div className="flex gap-4 rounded-[24px] border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-1 hover:border-brand-line">
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[18px] bg-brand-soft">
         {photoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element

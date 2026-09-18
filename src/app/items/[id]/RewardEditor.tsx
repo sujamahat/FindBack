@@ -46,7 +46,7 @@ export function RewardEditor({
             setSaved(false);
           }}
           placeholder="예: 20000"
-          className="flex-1 rounded-xl border border-line bg-white px-3 py-2 font-mono text-sm text-ink outline-none focus:border-brand focus:ring-4 focus:ring-brand/20"
+          className="flex-1 rounded-xl border border-line bg-surface px-3 py-2 font-mono text-sm text-ink outline-none focus:border-brand focus:ring-4 focus:ring-brand/20"
         />
         <button
           type="button"

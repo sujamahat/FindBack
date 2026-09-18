@@ -42,12 +42,12 @@ export function NewItemForm({ userId }: { userId: string }) {
   }
 
   return (
-    <form action={formAction} className="flex flex-col gap-5">
+    <form action={formAction} className="flex flex-col gap-5 rounded-[26px] border border-line bg-surface p-6 shadow-sm">
       <input type="hidden" name="photoUrl" value={photoUrl} />
 
       <div>
-        <label className="mb-2 block text-sm font-semibold text-navy">사진 (선택)</label>
-        <label className="flex h-32 w-32 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-sky bg-white">
+        <label className="mb-2 block text-sm font-bold text-ink">사진 (선택)</label>
+        <label className="flex h-32 w-32 cursor-pointer items-center justify-center overflow-hidden rounded-[24px] border border-dashed border-brand-line bg-brand-soft transition hover:border-brand">
           {photoPreview ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={photoPreview} alt="미리보기" className="h-full w-full object-cover" />
@@ -56,31 +56,31 @@ export function NewItemForm({ userId }: { userId: string }) {
           )}
           <input type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} />
         </label>
-        {uploading && <p className="mt-1 text-xs text-navy-soft">업로드 중...</p>}
-        {uploadError && <p className="mt-1 text-xs font-semibold text-coral">{uploadError}</p>}
+        {uploading && <p className="mt-1 text-xs text-ink-soft">업로드 중...</p>}
+        {uploadError && <p className="mt-1 text-xs font-semibold text-rose-700">{uploadError}</p>}
       </div>
 
-      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
+      <label className="flex flex-col gap-2 text-sm font-bold text-ink">
         물건 이름
         <input
           name="name"
           required
           maxLength={60}
           placeholder="예: 하늘색 우산"
-          className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
+          className="fb-input"
         />
         {state.fieldErrors?.name && (
-          <span className="text-xs font-semibold text-coral">{state.fieldErrors.name}</span>
+          <span className="text-xs font-semibold text-rose-700">{state.fieldErrors.name}</span>
         )}
       </label>
 
-      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
+      <label className="flex flex-col gap-2 text-sm font-bold text-ink">
         카테고리
         <select
           name="category"
           required
           defaultValue=""
-          className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
+          className="fb-input"
         >
           <option value="" disabled>
             선택해주세요
@@ -92,33 +92,33 @@ export function NewItemForm({ userId }: { userId: string }) {
           ))}
         </select>
         {state.fieldErrors?.category && (
-          <span className="text-xs font-semibold text-coral">{state.fieldErrors.category}</span>
+          <span className="text-xs font-semibold text-rose-700">{state.fieldErrors.category}</span>
         )}
       </label>
 
-      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
+      <label className="flex flex-col gap-2 text-sm font-bold text-ink">
         식별용 설명 (선택)
         <textarea
           name="description"
           maxLength={300}
           rows={3}
           placeholder="예: 손잡이에 스티커가 붙어있어요"
-          className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
+          className="fb-input"
         />
       </label>
 
-      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
+      <label className="flex flex-col gap-2 text-sm font-bold text-ink">
         선호하는 반환 안내 (선택)
         <textarea
           name="returnInstructions"
           maxLength={200}
           rows={2}
           placeholder="예: 학생회관 1층 안내데스크에 맡겨주세요"
-          className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
+          className="fb-input"
         />
       </label>
 
-      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
+      <label className="flex flex-col gap-2 text-sm font-bold text-ink">
         보상금 (선택, 데모용)
         <input
           name="rewardAmount"
@@ -127,18 +127,18 @@ export function NewItemForm({ userId }: { userId: string }) {
           max={10_000_000}
           step={1000}
           placeholder="예: 20000"
-          className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
+          className="fb-input"
         />
-        <span className="text-xs font-normal text-navy-soft">
+        <span className="text-xs font-normal text-ink-soft">
           습득자 페이지에 보여줄 보상금이에요. 실제 결제는 연동되어 있지 않은 데모 기능이에요.
         </span>
         {state.fieldErrors?.rewardAmount && (
-          <span className="text-xs font-semibold text-coral">{state.fieldErrors.rewardAmount}</span>
+          <span className="text-xs font-semibold text-rose-700">{state.fieldErrors.rewardAmount}</span>
         )}
       </label>
 
       {state.error && (
-        <p className="rounded-xl bg-coral-soft px-4 py-3 text-sm font-semibold text-coral">
+        <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
           {state.error}
         </p>
       )}
@@ -146,7 +146,7 @@ export function NewItemForm({ userId }: { userId: string }) {
       <button
         type="submit"
         disabled={isPending || uploading}
-        className="rounded-2xl bg-coral px-6 py-4 text-base font-bold text-white shadow-sm transition active:scale-[0.98] disabled:opacity-60"
+        className="rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98] disabled:opacity-60"
       >
         {isPending ? "등록 중..." : "물건 등록하기"}
       </button>

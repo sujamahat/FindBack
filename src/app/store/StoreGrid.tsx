@@ -68,7 +68,7 @@ export function StoreGrid() {
         {PRODUCTS.map((product) => (
           <div
             key={product.id}
-            className="flex flex-col gap-3 rounded-2xl border border-sky bg-white p-5 shadow-sm"
+            className="flex flex-col gap-3 rounded-2xl border border-sky bg-surface p-5 shadow-sm"
           >
             <div className="flex h-28 items-center justify-center rounded-xl bg-sky/40 text-5xl">
               {product.emoji}
@@ -95,7 +95,7 @@ export function StoreGrid() {
           onClick={() => step === "success" && closeModal()}
         >
           <div
-            className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-xl"
+            className="w-full max-w-sm rounded-2xl bg-surface p-6 text-center shadow-xl"
             onClick={(e) => e.stopPropagation()}
           >
             {step === "processing" ? (
