@@ -6,6 +6,8 @@ FindBack은 물리적인 QR 키링과 웹 애플리케이션을 연결하는 프
 
 GDGoC Korea University **BYPP 해커톤** 출품작입니다.
 
+🔗 **라이브 데모:** [https://findback-ten.vercel.app](https://findback-ten.vercel.app)
+
 ## 이 프로젝트가 해결하는 문제
 
 우산, 물병, 가방처럼 캠퍼스에서 흔히 잃어버리는 물건들은 되찾을 방법이 마땅치 않습니다. 이름표에 연락처를 적으면 개인정보가 노출되고, 분실물 보관소는 확인이 번거롭습니다. FindBack은:
