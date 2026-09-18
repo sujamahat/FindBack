@@ -21,8 +21,8 @@ export function ItemCard({
   onDeleted?: () => void;
 }) {
   return (
-    <div className="flex gap-4 rounded-2xl border border-sky bg-white p-4 shadow-sm">
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-sky">
+    <div className="flex gap-4 rounded-[24px] border border-line bg-white p-3 shadow-sm transition hover:-translate-y-1 hover:border-brand-line">
+      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[18px] bg-brand-soft">
         {photoUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={photoUrl} alt={name} className="h-full w-full object-cover" />
@@ -33,24 +33,24 @@ export function ItemCard({
       <div className="flex flex-1 flex-col gap-1">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className="font-bold text-navy">{name}</p>
-            <p className="text-xs text-navy-soft">{category}</p>
+            <p className="font-bold text-ink">{name}</p>
+            <p className="text-xs text-ink-soft">{category}</p>
           </div>
           <StatusBadge status={status} />
         </div>
-        <p className="text-xs text-navy-soft">
+        <p className="text-xs text-ink-mute">
           발견 제보 {reportCount}건
         </p>
         <div className="mt-auto flex gap-2 pt-2">
           <Link
             href={`/items/${id}`}
-            className="rounded-xl bg-navy px-3 py-2 text-xs font-bold text-cream"
+            className="rounded-xl bg-brand px-3 py-2 text-xs font-bold text-white transition hover:bg-brand-deep"
           >
             관리하기
           </Link>
           <Link
             href={`/items/${id}/tag`}
-            className="rounded-xl border border-navy px-3 py-2 text-xs font-bold text-navy"
+            className="rounded-xl border border-brand-line px-3 py-2 text-xs font-bold text-brand-deep transition hover:bg-brand-soft"
           >
             태그 보기
           </Link>

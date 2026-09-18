@@ -9,6 +9,16 @@
   --color-coral: #ff6f5e;
   --color-coral-soft: #ffd9d3;
 
+  /* FindBack v3: white / parrot green */
+  --color-brand: #10b981;
+  --color-brand-deep: #047857;
+  --color-brand-soft: #ecfdf5;
+  --color-brand-line: #a7f3d0;
+  --color-ink: #0f172a;
+  --color-ink-soft: #64748b;
+  --color-ink-mute: #94a3b8;
+  --color-line: #e2e8f0;
+
   --background: var(--color-cream);
   --foreground: var(--color-navy);
 }
@@ -23,6 +33,14 @@
   --color-navy-soft: var(--color-navy-soft);
   --color-coral: var(--color-coral);
   --color-coral-soft: var(--color-coral-soft);
+  --color-brand: var(--color-brand);
+  --color-brand-deep: var(--color-brand-deep);
+  --color-brand-soft: var(--color-brand-soft);
+  --color-brand-line: var(--color-brand-line);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-mute: var(--color-ink-mute);
+  --color-line: var(--color-line);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }

@@ -16,32 +16,32 @@ const PRIVACY_POINTS = [
 
 export default function LandingPage() {
   return (
-    <main className="flex-1">
+    <main className="flex-1 bg-white">
       <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 pt-16 pb-10 text-center">
         <Mascot size={112} />
-        <h1 className="text-2xl font-bold leading-snug text-navy sm:text-3xl">
+        <h1 className="text-2xl font-bold leading-snug text-ink sm:text-3xl">
           QR 키링으로 분실물을
           <br />더 안전하고 빠르게 돌려받으세요.
         </h1>
-        <p className="text-navy-soft">
+        <p className="text-ink-soft">
           FindBack은 물리적인 QR 키링과 웹을 연결해, 개인정보 노출 없이 분실물을
           되찾을 수 있도록 도와주는 서비스예요.
         </p>
         <div className="flex w-full max-w-sm flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/items/new"
-            className="flex-1 rounded-2xl bg-coral px-6 py-4 text-center text-base font-bold text-white shadow-sm transition active:scale-[0.98]"
+            className="flex-1 rounded-2xl bg-brand px-6 py-4 text-center text-base font-bold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98]"
           >
             내 물건 등록하기
           </Link>
           <Link
             href="/recover"
-            className="flex-1 rounded-2xl border-2 border-navy bg-white px-6 py-4 text-center text-base font-bold text-navy transition active:scale-[0.98]"
+            className="flex-1 rounded-2xl border border-brand-line bg-white px-6 py-4 text-center text-base font-bold text-brand-deep transition hover:bg-brand-soft active:scale-[0.98]"
           >
             습득물 코드 입력하기
           </Link>
         </div>
-        <Link href="/store" className="text-sm font-semibold text-navy-soft underline">
+        <Link href="/store" className="text-sm font-semibold text-brand-deep underline">
           QR 태그 구매 →
         </Link>
       </section>
@@ -51,25 +51,25 @@ export default function LandingPage() {
           {STEPS.map((step, i) => (
             <li
               key={step.title}
-              className="rounded-2xl border border-sky bg-white p-5 text-left shadow-sm"
+              className="rounded-[24px] border border-line bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:border-brand-line"
             >
-              <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-sky text-sm font-bold text-navy">
+              <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-brand-soft text-sm font-bold text-brand-deep ring-4 ring-brand/30">
                 {i + 1}
               </div>
-              <p className="font-bold text-navy">{step.title}</p>
-              <p className="mt-1 text-sm text-navy-soft">{step.desc}</p>
+              <p className="font-bold text-ink">{step.title}</p>
+              <p className="mt-1 text-sm text-ink-soft">{step.desc}</p>
             </li>
           ))}
         </ol>
       </section>
 
       <section className="mx-auto max-w-3xl px-6 pb-16">
-        <div className="rounded-2xl bg-navy p-6 text-cream">
-          <p className="mb-4 font-bold">FindBack이 지키는 원칙</p>
+        <div className="rounded-[24px] border border-brand-line bg-brand-soft p-6 text-ink">
+          <p className="mb-4 font-bold text-brand-deep">FindBack이 지키는 원칙</p>
           <ul className="grid gap-2 text-sm sm:grid-cols-2">
             {PRIVACY_POINTS.map((point) => (
               <li key={point} className="flex items-center gap-2">
-                <span className="text-coral">●</span>
+                <span className="text-brand">●</span>
                 {point}
               </li>
             ))}
