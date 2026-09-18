@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
+import { SafeImage } from "@/components/SafeImage";
 import { PublicHeader } from "@/components/PublicHeader";
 import { StatusBadge } from "@/components/StatusBadge";
 import { AnonymousChat } from "@/components/AnonymousChat";
-import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { createSupabaseAdminClient, isAdminConfigured } from "@/lib/supabase/admin";
 import { toPublicItemView } from "@/lib/publicItem";
 import type { ItemStatus } from "@/lib/constants";
 import { FinderForm } from "./FinderForm";
@@ -14,6 +15,24 @@ export default async function FinderPage({
   params: Promise<{ publicToken: string }>;
 }) {
   const { publicToken } = await params;
+
+  if (!isAdminConfigured()) {
+    return (
+      <>
+        <PublicHeader />
+        <main className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-6 py-12">
+          <div className="rounded-[26px] border border-line bg-surface p-6 text-center shadow-sm">
+            <p className="text-3xl">🛠️</p>
+            <p className="mt-3 font-black tracking-tight text-ink">서비스 준비 중이에요</p>
+            <p className="mt-2 text-sm text-ink-soft">
+              서버 설정(Supabase 환경 변수)이 아직 완료되지 않아 분실물 정보를 불러올 수 없어요.
+            </p>
+          </div>
+        </main>
+      </>
+    );
+  }
+
   const admin = createSupabaseAdminClient();
 
   const { data: item } = await admin
@@ -47,16 +66,12 @@ export default async function FinderPage({
       <div className="rounded-[24px] border border-line bg-surface p-5 shadow-sm">
         <div className="flex gap-4">
           <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[18px] bg-brand-soft">
-            {publicItem.photoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={publicItem.photoUrl}
-                alt={publicItem.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-3xl">📦</div>
-            )}
+            <SafeImage
+              src={publicItem.photoUrl}
+              alt={publicItem.name}
+              className="h-full w-full object-cover"
+              fallback={<div className="flex h-full w-full items-center justify-center text-3xl">📦</div>}
+            />
           </div>
           <div className="flex flex-col gap-1">
             <p className="text-lg font-bold text-ink">{publicItem.name}</p>

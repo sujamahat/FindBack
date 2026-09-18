@@ -14,10 +14,10 @@ const BUTTON_LABEL: Record<ItemStatus, string> = {
 };
 
 const BUTTON_STYLE: Record<ItemStatus, string> = {
-  safe: "border border-sky text-navy",
-  lost: "border-2 border-coral text-coral",
-  found: "border-2 border-coral text-coral",
-  returned: "bg-navy text-cream",
+  safe: "border border-brand-line text-brand-deep hover:bg-brand-soft",
+  lost: "border border-rose-200 text-rose-700 hover:bg-rose-50",
+  found: "border border-rose-200 text-rose-700 hover:bg-rose-50",
+  returned: "bg-brand text-white hover:bg-brand-deep",
 };
 
 export function StatusActions({ itemId, status }: { itemId: string; status: ItemStatus }) {

@@ -1,7 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "./types";
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./env";
+import {
+  FALLBACK_SUPABASE_ANON_KEY,
+  FALLBACK_SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  SUPABASE_URL,
+  warnSupabaseNotConfigured,
+} from "./env";
 
 /**
  * Supabase client for Server Components / Server Actions / Route Handlers.
@@ -10,8 +16,12 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./env";
  */
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies();
+  warnSupabaseNotConfigured();
 
-  return createServerClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  return createServerClient<Database>(
+    SUPABASE_URL || FALLBACK_SUPABASE_URL,
+    SUPABASE_ANON_KEY || FALLBACK_SUPABASE_ANON_KEY,
+    {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -27,5 +37,6 @@ export async function createSupabaseServerClient() {
         }
       },
     },
-  });
+    }
+  );
 }

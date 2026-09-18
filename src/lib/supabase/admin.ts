@@ -10,6 +10,11 @@ import { SUPABASE_URL } from "./env";
  * Client Component, and never let SUPABASE_SERVICE_ROLE_KEY leak into a
  * NEXT_PUBLIC_* variable.
  */
+/** True when the service-role client can be created (URL + SUPABASE_SERVICE_ROLE_KEY set). */
+export function isAdminConfigured(): boolean {
+  return Boolean(SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+}
+
 export function createSupabaseAdminClient() {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!SUPABASE_URL || !serviceRoleKey) {

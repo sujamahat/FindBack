@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { SafeImage } from "@/components/SafeImage";
 import { AppHeader } from "@/components/AppHeader";
 import { StatusBadge } from "@/components/StatusBadge";
 import { AnonymousChat } from "@/components/AnonymousChat";
@@ -68,31 +69,31 @@ export default async function ItemDetailPage({
       <AppHeader email={user.email} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-8">
         {created && (
-          <div className="mb-6 rounded-2xl bg-sky p-4 text-sm font-semibold text-navy">
+          <div className="mb-6 rounded-[24px] bg-brand-soft p-4 text-sm font-semibold text-ink">
             물건이 등록되었어요! QR 태그를 인쇄해서 물건에 붙여보세요.
           </div>
         )}
 
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-          <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-2xl bg-sky">
-            {item.photo_url ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.photo_url} alt={item.name} className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-4xl">📦</div>
-            )}
+          <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-[24px] bg-brand-soft">
+            <SafeImage
+              src={item.photo_url}
+              alt={item.name}
+              className="h-full w-full object-cover"
+              fallback={<div className="flex h-full w-full items-center justify-center text-4xl">📦</div>}
+            />
           </div>
           <div className="flex flex-1 flex-col gap-2">
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-xl font-bold text-navy">{item.name}</h1>
+              <h1 className="text-xl font-bold text-ink">{item.name}</h1>
               <StatusBadge status={item.status as ItemStatus} />
             </div>
-            <p className="text-sm text-navy-soft">{item.category}</p>
-            {item.description && <p className="text-sm text-navy">{item.description}</p>}
+            <p className="text-sm text-ink-soft">{item.category}</p>
+            {item.description && <p className="text-sm text-ink">{item.description}</p>}
             <div className="mt-2 flex flex-wrap gap-2">
               <Link
                 href={`/items/${item.id}/tag`}
-                className="rounded-xl bg-coral px-4 py-2 text-sm font-bold text-white"
+                className="rounded-xl bg-brand px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-deep"
               >
                 QR 태그 보기 / 인쇄
               </Link>
@@ -109,13 +110,13 @@ export default async function ItemDetailPage({
         </section>
 
         <section className="mt-10">
-          <h2 className="mb-3 text-lg font-bold text-navy">타임라인</h2>
-          <ol className="flex flex-col gap-3 border-l-2 border-sky pl-4">
+          <h2 className="mb-3 text-lg font-bold text-ink">타임라인</h2>
+          <ol className="flex flex-col gap-3 border-l-2 border-brand-line pl-4">
             {timeline.map((entry, i) => (
               <li key={i} className="text-sm">
                 <span className="mr-2">{entry.emoji}</span>
-                <span className="font-semibold text-navy">{entry.label}</span>{" "}
-                <span className="text-navy-soft">
+                <span className="font-semibold text-ink">{entry.label}</span>{" "}
+                <span className="text-ink-soft">
                   {new Date(entry.at).toLocaleString("ko-KR")}
                 </span>
               </li>
@@ -124,7 +125,7 @@ export default async function ItemDetailPage({
         </section>
 
         <section className="mt-10">
-          <h2 className="mb-3 text-lg font-bold text-navy">발견 제보</h2>
+          <h2 className="mb-3 text-lg font-bold text-ink">발견 제보</h2>
           <RealtimeReports itemId={item.id} initialReports={reports ?? []} />
         </section>
 

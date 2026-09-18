@@ -4,9 +4,40 @@ import { AppHeader } from "@/components/AppHeader";
 import { ProfileBanner } from "@/components/ProfileBanner";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { ItemStatus } from "@/lib/constants";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { ItemGrid, type DashboardItem } from "./ItemGrid";
 
+const DEMO_ITEMS: DashboardItem[] = [
+  { id: "demo-1", name: "에어팟 프로 2", category: "전자기기", status: "safe", photoUrl: null, reportCount: 0 },
+  { id: "demo-2", name: "자동차 키 (제네시스)", category: "열쇠", status: "lost", photoUrl: null, reportCount: 2 },
+  { id: "demo-3", name: "하늘색 우산", category: "우산", status: "returned", photoUrl: null, reportCount: 1 },
+];
+
+/** Shown when Supabase env vars are missing, so the UI is still browsable locally. */
+function DemoDashboard() {
+  return (
+    <>
+      <AppHeader email={null} />
+      <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-8 pb-28">
+        <p className="mb-4 rounded-2xl border border-brand-line bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-deep">
+          데모 모드 — Supabase 환경 변수가 설정되지 않아 예시 데이터를 보여주고 있어요. .env.example을
+          참고해 .env.local을 만들면 실제 데이터로 전환돼요.
+        </p>
+        <ProfileBanner
+          email="demo@findback.app"
+          total={DEMO_ITEMS.length}
+          lostCount={DEMO_ITEMS.filter((i) => i.status === "lost").length}
+          returnedCount={DEMO_ITEMS.filter((i) => i.status === "returned").length}
+        />
+        <ItemGrid initialItems={DEMO_ITEMS} readOnly />
+      </main>
+    </>
+  );
+}
+
 export default async function DashboardPage() {
+  if (!isSupabaseConfigured) return <DemoDashboard />;
+
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },

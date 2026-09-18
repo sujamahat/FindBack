@@ -2,8 +2,18 @@
 
 import { createBrowserClient } from "@supabase/ssr";
 import type { Database } from "./types";
-import { SUPABASE_ANON_KEY, SUPABASE_URL } from "./env";
+import {
+  FALLBACK_SUPABASE_ANON_KEY,
+  FALLBACK_SUPABASE_URL,
+  SUPABASE_ANON_KEY,
+  SUPABASE_URL,
+  warnSupabaseNotConfigured,
+} from "./env";
 
 export function createClient() {
-  return createBrowserClient<Database>(SUPABASE_URL, SUPABASE_ANON_KEY);
+  warnSupabaseNotConfigured();
+  return createBrowserClient<Database>(
+    SUPABASE_URL || FALLBACK_SUPABASE_URL,
+    SUPABASE_ANON_KEY || FALLBACK_SUPABASE_ANON_KEY
+  );
 }

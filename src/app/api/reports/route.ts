@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "crypto";
-import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { createSupabaseAdminClient, isAdminConfigured } from "@/lib/supabase/admin";
 import { sendOwnerReportNotification } from "@/lib/notifications/email";
 import { getAppUrl } from "@/lib/supabase/env";
 import { getClientKey, isRateLimited } from "@/lib/rateLimit";
@@ -24,6 +24,13 @@ export async function POST(request: Request) {
     formData = await request.formData();
   } catch {
     return NextResponse.json({ error: "잘못된 요청입니다." }, { status: 400 });
+  }
+
+  if (!isAdminConfigured()) {
+    return NextResponse.json(
+      { error: "서버 설정이 아직 완료되지 않았어요. 잠시 후 다시 시도해주세요." },
+      { status: 503 }
+    );
   }
 
   const admin = createSupabaseAdminClient();

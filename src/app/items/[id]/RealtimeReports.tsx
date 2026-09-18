@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { SafeImage } from "@/components/SafeImage";
 import { createClient } from "@/lib/supabase/client";
 import { RETURN_METHOD_LABELS, type ReturnMethod } from "@/lib/constants";
 
@@ -71,7 +72,7 @@ export function RealtimeReports({
 
   if (reports.length === 0) {
     return (
-      <p className="rounded-2xl border border-dashed border-sky bg-surface p-6 text-center text-sm text-navy-soft">
+      <p className="rounded-[24px] border border-dashed border-brand-line bg-surface p-6 text-center text-sm text-ink-soft">
         아직 발견 제보가 없어요. QR 태그를 물건에 붙여두면 여기에 도착해요.
       </p>
     );
@@ -80,31 +81,31 @@ export function RealtimeReports({
   return (
     <ul className="flex flex-col gap-3">
       {reports.map((report) => (
-        <li key={report.id} className="rounded-2xl border border-sky bg-surface p-4">
+        <li key={report.id} className="rounded-[24px] border border-line bg-surface p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-navy-soft">
+            <span className="text-xs font-semibold text-ink-soft">
               {new Date(report.created_at).toLocaleString("ko-KR")}
             </span>
-            <span className="rounded-full bg-sky px-2 py-1 text-xs font-bold text-navy">
+            <span className="rounded-full border border-brand-line bg-brand-soft px-2 py-1 text-xs font-bold text-brand-deep">
               {RETURN_METHOD_LABELS[report.return_method]}
             </span>
           </div>
           {report.custom_return_place && (
-            <p className="mt-2 text-sm text-navy">
+            <p className="mt-2 text-sm text-ink">
               <span className="font-semibold">맡긴 장소:</span> {report.custom_return_place}
             </p>
           )}
-          {report.message && <p className="mt-1 text-sm text-navy-soft">“{report.message}”</p>}
+          {report.message && <p className="mt-1 text-sm text-ink-soft">“{report.message}”</p>}
 
           {(report.location_text || (report.latitude != null && report.longitude != null)) && (
-            <div className="mt-2 rounded-xl border border-sky bg-sky/20 p-3">
-              <p className="text-xs font-bold text-navy">📍 위치 정보</p>
+            <div className="mt-2 rounded-xl border border-line bg-brand-soft p-3">
+              <p className="text-xs font-bold text-ink">📍 위치 정보</p>
               {report.location_text && (
-                <p className="mt-1 text-sm text-navy">{report.location_text}</p>
+                <p className="mt-1 text-sm text-ink">{report.location_text}</p>
               )}
               {report.latitude != null && report.longitude != null && (
                 <>
-                  <p className="mt-1 text-xs text-navy-soft">
+                  <p className="mt-1 text-xs text-ink-soft">
                     좌표: {report.latitude.toFixed(5)}, {report.longitude.toFixed(5)}
                   </p>
                   <div className="mt-2 flex flex-wrap gap-2">
@@ -112,7 +113,7 @@ export function RealtimeReports({
                       href={googleMapsUrl(report.latitude, report.longitude)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full border border-navy px-3 py-1 text-xs font-semibold text-navy"
+                      className="rounded-full border border-brand-line px-3 py-1 text-xs font-semibold text-brand-deep transition hover:bg-brand-soft"
                     >
                       구글 지도 →
                     </a>
@@ -120,7 +121,7 @@ export function RealtimeReports({
                       href={kakaoMapUrl(report.latitude, report.longitude)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full border border-navy px-3 py-1 text-xs font-semibold text-navy"
+                      className="rounded-full border border-brand-line px-3 py-1 text-xs font-semibold text-brand-deep transition hover:bg-brand-soft"
                     >
                       카카오맵 →
                     </a>
@@ -128,7 +129,7 @@ export function RealtimeReports({
                       href={naverMapUrl(report.latitude, report.longitude)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-full border border-navy px-3 py-1 text-xs font-semibold text-navy"
+                      className="rounded-full border border-brand-line px-3 py-1 text-xs font-semibold text-brand-deep transition hover:bg-brand-soft"
                     >
                       네이버 지도 →
                     </a>
@@ -138,11 +139,15 @@ export function RealtimeReports({
             </div>
           )}
           {report.photo_url && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <SafeImage
               src={report.photo_url}
               alt="제보 사진"
               className="mt-2 h-40 w-full rounded-xl object-cover"
+              fallback={
+                <div className="mt-2 flex h-40 w-full items-center justify-center rounded-xl bg-brand-soft text-3xl">
+                  📷
+                </div>
+              }
             />
           )}
         </li>

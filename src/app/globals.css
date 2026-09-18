@@ -115,3 +115,13 @@ body {
     display: none !important;
   }
 }
+
+/* The printable QR tag is a physical light card: keep its palette fixed in dark mode. */
+#tag-print-area {
+  --color-cream: #fdfaf3;
+  --color-sky: #cfe8f7;
+  --color-sky-deep: #8fcbe8;
+  --color-navy: #1c2b4a;
+  --color-navy-soft: #33456b;
+  --color-coral: #ff6f5e;
+}

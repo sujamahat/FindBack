@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 
 type Mode = "signin" | "signup";
 
@@ -28,6 +29,7 @@ export function LoginForm({ next }: { next: string }) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!isSupabaseConfigured) return;
     setStatus("sending");
     setError(null);
 
@@ -88,6 +90,13 @@ export function LoginForm({ next }: { next: string }) {
         ))}
       </div>
 
+      {!isSupabaseConfigured && (
+        <p className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700">
+          Supabase 환경 변수가 설정되지 않아 로그인할 수 없어요. .env.example을 참고해 .env.local을
+          만든 뒤 개발 서버를 다시 시작해주세요.
+        </p>
+      )}
+
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="flex flex-col gap-2 text-sm font-bold text-ink">
           이메일 주소
@@ -104,7 +113,7 @@ export function LoginForm({ next }: { next: string }) {
         {error && <p className="text-sm font-semibold text-rose-700">{error}</p>}
         <button
           type="submit"
-          disabled={status === "sending"}
+          disabled={status === "sending" || !isSupabaseConfigured}
           className="rounded-2xl bg-brand px-6 py-4 text-base font-bold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98] disabled:opacity-60"
         >
           {status === "sending" ? MODE_COPY[mode].sendingButton : MODE_COPY[mode].button}

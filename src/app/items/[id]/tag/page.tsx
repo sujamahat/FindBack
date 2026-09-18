@@ -32,10 +32,10 @@ export default async function TagPage({ params }: { params: Promise<{ id: string
     <>
       <AppHeader email={user.email} />
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-8">
-        <Link href={`/items/${id}`} className="no-print mb-4 inline-block text-sm text-navy-soft underline">
+        <Link href={`/items/${id}`} className="no-print mb-4 inline-block text-sm text-ink-soft underline">
           ← 물건으로 돌아가기
         </Link>
-        <h1 className="no-print mb-6 text-xl font-bold text-navy">QR 태그</h1>
+        <h1 className="no-print mb-6 text-xl font-bold text-ink">QR 태그</h1>
         <TagView itemName={item.name} publicUrl={publicUrl} recoveryCode={item.recovery_code} />
       </main>
     </>

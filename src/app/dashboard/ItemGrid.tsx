@@ -14,7 +14,14 @@ export type DashboardItem = {
   reportCount: number;
 };
 
-export function ItemGrid({ initialItems }: { initialItems: DashboardItem[] }) {
+export function ItemGrid({
+  initialItems,
+  readOnly = false,
+}: {
+  initialItems: DashboardItem[];
+  /** Demo data: hide delete and the add-item card, since nothing is backed by Supabase. */
+  readOnly?: boolean;
+}) {
   const [items, setItems] = useState(initialItems);
   const [filter, setFilter] = useState<"all" | "lost">("all");
 
@@ -64,9 +71,10 @@ export function ItemGrid({ initialItems }: { initialItems: DashboardItem[] }) {
             status={item.status}
             photoUrl={item.photoUrl}
             reportCount={item.reportCount}
-            onDeleted={() => handleDeleted(item.id)}
+            onDeleted={readOnly ? undefined : () => handleDeleted(item.id)}
           />
         ))}
+        {!readOnly && (
         <Link
           href="/items/new"
           className="flex min-h-[200px] flex-col items-center justify-center gap-2.5 rounded-[24px] border border-dashed border-brand-line bg-brand-soft transition hover:border-brand"
@@ -78,6 +86,7 @@ export function ItemGrid({ initialItems }: { initialItems: DashboardItem[] }) {
             {items.length === 0 ? "첫 물건 등록하기" : "새 물건 등록"}
           </span>
         </Link>
+        )}
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SafeImage } from "@/components/SafeImage";
 import { StatusBadge } from "@/components/StatusBadge";
 import { DeleteItemButton } from "@/components/DeleteItemButton";
 import type { ItemStatus } from "@/lib/constants";
@@ -23,12 +24,12 @@ export function ItemCard({
   return (
     <div className="flex gap-4 rounded-[24px] border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-1 hover:border-brand-line">
       <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[18px] bg-brand-soft">
-        {photoUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={photoUrl} alt={name} className="h-full w-full object-cover" />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-2xl">📦</div>
-        )}
+        <SafeImage
+          src={photoUrl}
+          alt={name}
+          className="h-full w-full object-cover"
+          fallback={<div className="flex h-full w-full items-center justify-center text-2xl">📦</div>}
+        />
       </div>
       <div className="flex flex-1 flex-col gap-1">
         <div className="flex items-start justify-between gap-2">

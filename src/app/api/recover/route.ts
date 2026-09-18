@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { createSupabaseAdminClient, isAdminConfigured } from "@/lib/supabase/admin";
 import { normalizeRecoveryCode } from "@/lib/codes";
 import { getClientKey, isRateLimited } from "@/lib/rateLimit";
 import { recoverCodeSchema } from "@/lib/validation";
@@ -25,6 +25,13 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: "코드를 정확히 입력해주세요." },
       { status: 400 }
+    );
+  }
+
+  if (!isAdminConfigured()) {
+    return NextResponse.json(
+      { error: "서버 설정이 아직 완료되지 않았어요. 잠시 후 다시 시도해주세요." },
+      { status: 503 }
     );
   }
 
