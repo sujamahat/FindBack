@@ -76,6 +76,37 @@ describe("reportFormRefined", () => {
     });
     expect(result.success).toBe(false);
   });
+
+  it("accepts a report with no locationText at all (optional, per zero-friction requirement)", () => {
+    const { locationText: _locationText, ...withoutLocation } = base;
+    void _locationText;
+    expect(reportFormRefined.safeParse(withoutLocation).success).toBe(true);
+  });
+
+  it("accepts valid opt-in GPS coordinates", () => {
+    const result = reportFormRefined.safeParse({ ...base, latitude: "37.5665", longitude: "126.9780" });
+    expect(result.success).toBe(true);
+  });
+
+  it("treats empty-string coordinates as absent rather than 0,0", () => {
+    const result = reportFormRefined.safeParse({ ...base, latitude: "", longitude: "" });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.latitude).toBeUndefined();
+      expect(result.data.longitude).toBeUndefined();
+    }
+  });
+
+  it("treats null coordinates (FormData.get() default) as absent", () => {
+    const result = reportFormRefined.safeParse({ ...base, latitude: null, longitude: null });
+    expect(result.success).toBe(true);
+  });
+
+  it("rejects out-of-range coordinates", () => {
+    expect(reportFormRefined.safeParse({ ...base, latitude: "999", longitude: "0" }).success).toBe(
+      false
+    );
+  });
 });
 
 describe("recoverCodeSchema", () => {

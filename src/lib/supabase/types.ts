@@ -44,6 +44,8 @@ export interface Database {
           custom_return_place: string | null;
           message: string | null;
           photo_url: string | null;
+          latitude: number | null;
+          longitude: number | null;
           created_at: string;
         };
         Insert: {
@@ -54,6 +56,8 @@ export interface Database {
           custom_return_place?: string | null;
           message?: string | null;
           photo_url?: string | null;
+          latitude?: number | null;
+          longitude?: number | null;
           created_at?: string;
         };
         Update: Partial<Database["public"]["Tables"]["found_reports"]["Insert"]>;

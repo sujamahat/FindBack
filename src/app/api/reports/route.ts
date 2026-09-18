@@ -66,6 +66,8 @@ export async function POST(request: Request) {
     customReturnPlace: formData.get("customReturnPlace"),
     message: formData.get("message"),
     photoUrl: uploadedPhotoUrl || undefined,
+    latitude: formData.get("latitude"),
+    longitude: formData.get("longitude"),
     privacyAck: formData.get("privacyAck") === "true",
     website: formData.get("website"),
   });
@@ -97,11 +99,13 @@ export async function POST(request: Request) {
 
   const { error: insertError } = await admin.from("found_reports").insert({
     item_id: item.id,
-    location_text: data.locationText,
+    location_text: data.locationText || null,
     return_method: data.returnMethod,
     custom_return_place: data.customReturnPlace || null,
     message: data.message || null,
     photo_url: data.photoUrl || null,
+    latitude: data.latitude ?? null,
+    longitude: data.longitude ?? null,
   });
 
   if (insertError) {

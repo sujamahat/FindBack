@@ -12,6 +12,8 @@ export type ReportRow = {
   custom_return_place: string | null;
   message: string | null;
   photo_url: string | null;
+  latitude: number | null;
+  longitude: number | null;
   created_at: string;
 };
 
@@ -86,6 +88,12 @@ export function RealtimeReports({
             </p>
           )}
           {report.message && <p className="mt-1 text-sm text-navy-soft">“{report.message}”</p>}
+          {report.latitude != null && report.longitude != null && (
+            <p className="mt-1 text-xs text-navy-soft">
+              <span className="font-semibold text-navy">공유된 좌표:</span>{" "}
+              {report.latitude.toFixed(5)}, {report.longitude.toFixed(5)}
+            </p>
+          )}
           {report.photo_url && (
             // eslint-disable-next-line @next/next/no-img-element
             <img

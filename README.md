@@ -41,7 +41,9 @@ src/
     codes.ts      public_token / recovery_code 생성
     statusTransitions.ts  상태 전이 규칙
     notifications/email.ts  이메일 알림 추상화 (Resend, 선택)
-supabase/migrations/initial_schema.sql  전체 스키마 + RLS + 스토리지 정책
+supabase/migrations/
+  20260918000000_initial_schema.sql       전체 스키마 + RLS + 스토리지 정책
+  20260919000000_add_report_geolocation.sql  제보 GPS 좌표(선택) 컬럼 추가
 ```
 
 ## 로컬 개발 환경 설정
@@ -58,7 +60,7 @@ npm run dev                  # http://localhost:3000
 2. **Project Settings → API**에서 Project URL, `anon` public key, `service_role` key를 복사해 `.env.local`에 채웁니다.
 3. **Authentication → Providers → Email**에서 매직링크(OTP) 로그인이 활성화되어 있는지 확인합니다(기본값으로 이미 켜져 있습니다).
 4. **Authentication → URL Configuration**의 Redirect URLs에 `http://localhost:3000/auth/callback`과 배포 도메인의 `/auth/callback`을 추가합니다.
-5. 마이그레이션을 적용합니다(아래 "마이그레이션 적용" 참고). 이 마이그레이션이 `items`, `found_reports`, `item_status_events` 테이블, RLS 정책, `findback-media` 공개 스토리지 버킷을 모두 생성합니다.
+5. 마이그레이션을 적용합니다(아래 "마이그레이션 적용" 참고). `supabase/migrations/`의 두 파일이 `items`, `found_reports`(GPS 좌표 컬럼 포함), `item_status_events` 테이블, RLS 정책, `findback-media` 공개 스토리지 버킷을 모두 생성합니다.
 
 ## 마이그레이션 적용
 
@@ -69,7 +71,7 @@ supabase link --project-ref YOUR-PROJECT-REF
 supabase db push
 ```
 
-CLI가 없다면 Supabase 대시보드의 **SQL Editor**에 `supabase/migrations/initial_schema.sql` 내용을 그대로 붙여넣어 실행해도 동일합니다.
+CLI가 없다면 Supabase 대시보드의 **SQL Editor**에 `supabase/migrations/` 안의 두 파일을 **파일명 순서대로**(`20260918000000_initial_schema.sql` 다음 `20260919000000_add_report_geolocation.sql`) 그대로 붙여넣어 실행해도 동일합니다.
 
 ## 환경 변수
 

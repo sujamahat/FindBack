@@ -60,6 +60,20 @@ Development log for FindBack, built for the GDGoC Korea University BYPP hackatho
     clarified) into a standalone `~/findback` with its own git repo. Files
     were copied (excluding `node_modules`/`.next`), `git init` run fresh, and
     lint/type-check/build re-verified from the new location before continuing.
+12. **Karrot-style dashboard + zero-friction finder page** — Redesigned
+    `/dashboard` with a profile banner (derived display name/email + total /
+    lost / returned stat counts), a responsive item grid, a sticky primary
+    "+ 새 물건 등록하기" CTA, and a mascot-illustrated empty state. On
+    `/f/[publicToken]`: added quick-select message pills, two trust-indicator
+    chips, and an **opt-in** "내 위치 공유하기" button that calls
+    `navigator.geolocation.getCurrentPosition` only on tap (never
+    automatically) and attaches lat/lng to the report. `found_reports.location_text`
+    was relaxed from required to optional per explicit request. Renamed
+    `initial_schema.sql` → `20260918000000_initial_schema.sql` and added
+    `20260919000000_add_report_geolocation.sql` for the new nullable
+    `latitude`/`longitude` columns, since Supabase's migration ordering is
+    filename-based and the original undated filename would have sorted
+    before any numerically-prefixed follow-up.
 
 ## Important decisions
 
@@ -84,6 +98,17 @@ Development log for FindBack, built for the GDGoC Korea University BYPP hackatho
 - **Owners cannot directly set status to `found`.** It's system-set the moment
   a finder report lands, so it was removed from the manually-selectable
   transition graph to avoid a confusing/inconsistent state.
+- **GPS sharing kept strictly opt-in, tapping a tension with the product's own
+  privacy pitch.** The landing page and finder page both state "위치 자동수집
+  없음" / no *automatic* location access — that promise is still literally
+  true (the browser's geolocation prompt only fires when the finder taps
+  "내 위치 공유하기"), but this is a genuine addition to what the app collects
+  and is worth the team being deliberate about in the demo narrative, not
+  something to gloss over as purely cosmetic.
+- **`location_text` made optional, not required.** Requested explicitly to
+  reduce finder friction. Trade-off: a report can now be submitted with no
+  text location and no shared GPS (only a `return_method`) — accepted as-is
+  per the request, not defended against with an added cross-field rule.
 
 ## Commands used
 

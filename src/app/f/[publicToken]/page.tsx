@@ -31,6 +31,14 @@ export default async function FinderPage({
       <div className="mb-6 flex flex-col items-center gap-2 text-center">
         <Mascot size={56} />
         <p className="text-sm font-semibold text-navy-soft">FindBack 분실물 제보</p>
+        <div className="flex flex-wrap justify-center gap-2">
+          <span className="rounded-full bg-sky/60 px-3 py-1 text-xs font-semibold text-navy">
+            ✓ 인증된 FindBack 태그
+          </span>
+          <span className="rounded-full bg-sky/60 px-3 py-1 text-xs font-semibold text-navy">
+            🔒 안전한 익명 제보
+          </span>
+        </div>
       </div>
 
       <div className="rounded-2xl border border-sky bg-white p-5">

@@ -3,12 +3,35 @@
 import { useState } from "react";
 import { RETURN_METHODS, RETURN_METHOD_LABELS, type ReturnMethod } from "@/lib/constants";
 
+const QUICK_MESSAGES = ["경비실에 맡겼어요", "안내데스크에 맡겼어요", "기타 장소에 맡겼어요"];
+
+type GeoStatus = "idle" | "loading" | "granted" | "denied" | "unsupported";
+
 export function FinderForm({ publicToken }: { publicToken: string }) {
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [returnMethod, setReturnMethod] = useState<ReturnMethod>("location_only");
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [message, setMessage] = useState("");
+  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [geoStatus, setGeoStatus] = useState<GeoStatus>("idle");
+
+  function handleShareLocation() {
+    if (!("geolocation" in navigator)) {
+      setGeoStatus("unsupported");
+      return;
+    }
+    setGeoStatus("loading");
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setCoords({ lat: position.coords.latitude, lng: position.coords.longitude });
+        setGeoStatus("granted");
+      },
+      () => setGeoStatus("denied"),
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -60,11 +83,43 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
         </label>
       </div>
 
+      <input type="hidden" name="latitude" value={coords?.lat ?? ""} />
+      <input type="hidden" name="longitude" value={coords?.lng ?? ""} />
+
+      <div className="flex flex-col gap-2 rounded-xl border border-dashed border-sky bg-white p-4">
+        <button
+          type="button"
+          onClick={handleShareLocation}
+          disabled={geoStatus === "loading"}
+          className="rounded-xl border-2 border-navy px-4 py-3 text-sm font-bold text-navy disabled:opacity-60"
+        >
+          📍 내 위치 공유하기 (선택)
+        </button>
+        <p className="text-xs text-navy-soft">
+          버튼을 누를 때만 위치 정보를 보내요. 자동으로 수집되지 않으며, 건너뛰어도 괜찮아요.
+        </p>
+        {geoStatus === "loading" && <p className="text-xs text-navy-soft">위치 확인 중...</p>}
+        {geoStatus === "granted" && coords && (
+          <p className="text-xs font-semibold text-navy">
+            현재 위치가 첨부되었어요 ({coords.lat.toFixed(5)}, {coords.lng.toFixed(5)})
+          </p>
+        )}
+        {geoStatus === "denied" && (
+          <p className="text-xs font-semibold text-coral">
+            위치 공유가 허용되지 않았어요. 아래에 발견 장소를 적어주셔도 충분해요.
+          </p>
+        )}
+        {geoStatus === "unsupported" && (
+          <p className="text-xs font-semibold text-coral">
+            이 브라우저는 위치 공유를 지원하지 않아요.
+          </p>
+        )}
+      </div>
+
       <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
-        발견 장소 또는 건물
+        발견 장소 또는 건물 (선택)
         <input
           name="locationText"
-          required
           maxLength={200}
           placeholder="예: 중앙도서관 2층 열람실"
           className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
@@ -116,16 +171,34 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
         </label>
       )}
 
-      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
-        전하고 싶은 말 (선택)
+      <div className="flex flex-col gap-2">
+        <label className="text-sm font-semibold text-navy">전하고 싶은 말 (선택)</label>
+        <div className="flex flex-wrap gap-2">
+          {QUICK_MESSAGES.map((quickMessage) => (
+            <button
+              key={quickMessage}
+              type="button"
+              onClick={() => setMessage(quickMessage)}
+              className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                message === quickMessage
+                  ? "border-navy bg-sky/40 text-navy"
+                  : "border-sky text-navy-soft"
+              }`}
+            >
+              {quickMessage}
+            </button>
+          ))}
+        </div>
         <textarea
           name="message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
           maxLength={500}
           rows={3}
           placeholder="주인에게 남기고 싶은 메시지"
           className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
         />
-      </label>
+      </div>
 
       <div>
         <label className="mb-2 block text-sm font-semibold text-navy">사진 (선택)</label>

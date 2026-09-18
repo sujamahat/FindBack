@@ -1,5 +1,7 @@
 -- FindBack initial schema
 -- Run via `supabase db push` or paste into the Supabase SQL editor.
+-- Filename is timestamp-prefixed so `supabase db push` orders it correctly
+-- relative to later migrations (e.g. 20260919000000_add_report_geolocation.sql).
 
 create extension if not exists pgcrypto;
 
