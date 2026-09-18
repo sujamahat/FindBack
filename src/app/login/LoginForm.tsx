@@ -21,6 +21,48 @@ const MODE_COPY: Record<Mode, { tab: string; button: string; sendingButton: stri
   },
 };
 
+const IS_DEV = process.env.NODE_ENV !== "production";
+
+/** Development-only email + password sign-in for the seeded test user (npm run seed:user). */
+function DevPasswordLogin({ next }: { next: string }) {
+  const [email, setEmail] = useState("test@example.com");
+  const [password, setPassword] = useState("password123");
+  const [error, setError] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setBusy(true);
+    setError(null);
+    const { error } = await createClient().auth.signInWithPassword({ email, password });
+    if (error) {
+      setBusy(false);
+      setError(`${error.message} — npm run seed:user 로 테스트 계정을 먼저 만들어주세요.`);
+      return;
+    }
+    window.location.assign(next);
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col gap-3 rounded-[26px] border border-dashed border-line bg-surface p-6"
+    >
+      <p className="text-xs font-black uppercase tracking-wide text-ink-mute">개발용 테스트 로그인</p>
+      <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="fb-input" />
+      <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} className="fb-input" />
+      {error && <p className="text-sm font-semibold text-rose-700">{error}</p>}
+      <button
+        type="submit"
+        disabled={busy || !isSupabaseConfigured}
+        className="rounded-2xl border border-brand px-6 py-3 text-sm font-bold text-brand-deep transition hover:bg-brand-soft disabled:opacity-60"
+      >
+        {busy ? "로그인 중..." : "비밀번호로 로그인"}
+      </button>
+    </form>
+  );
+}
+
 export function LoginForm({ next }: { next: string }) {
   const [mode, setMode] = useState<Mode>("signin");
   const [email, setEmail] = useState("");
@@ -73,6 +115,7 @@ export function LoginForm({ next }: { next: string }) {
   }
 
   return (
+    <>
     <div className="flex flex-col gap-4 rounded-[26px] border border-line bg-surface p-6 shadow-sm">
       <div className="grid grid-cols-2 gap-1 rounded-2xl border border-line bg-background p-1">
         {(["signin", "signup"] as const).map((m) => (
@@ -124,5 +167,7 @@ export function LoginForm({ next }: { next: string }) {
         </p>
       </form>
     </div>
+    {IS_DEV && <DevPasswordLogin next={next} />}
+    </>
   );
 }
