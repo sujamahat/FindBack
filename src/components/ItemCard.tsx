@@ -22,36 +22,33 @@ export function ItemCard({
   onDeleted?: () => void;
 }) {
   return (
-    <div className="flex gap-4 rounded-[24px] border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-1 hover:border-brand-line">
-      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[18px] bg-brand-soft">
+    <div className="flex min-w-0 flex-col overflow-hidden rounded-[24px] border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-1 hover:border-brand-line">
+      <div className="relative h-36 w-full overflow-hidden rounded-[18px] bg-brand-soft">
         <SafeImage
           src={photoUrl}
           alt={name}
           className="h-full w-full object-cover"
-          fallback={<div className="flex h-full w-full items-center justify-center text-2xl">📦</div>}
+          fallback={<div className="flex h-full w-full items-center justify-center text-4xl">📦</div>}
         />
-      </div>
-      <div className="flex flex-1 flex-col gap-1">
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <p className="font-bold text-ink">{name}</p>
-            <p className="text-xs text-ink-soft">{category}</p>
-          </div>
+        <div className="absolute left-2.5 top-2.5">
           <StatusBadge status={status} />
         </div>
-        <p className="text-xs text-ink-mute">
-          발견 제보 {reportCount}건
+      </div>
+      <div className="flex flex-1 flex-col gap-1 px-1.5 pb-1 pt-3">
+        <p className="break-words text-[15px] font-bold leading-snug text-ink">{name}</p>
+        <p className="text-xs text-ink-soft">
+          {category} · 발견 제보 {reportCount}건
         </p>
-        <div className="mt-auto flex gap-2 pt-2">
+        <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-line pt-3 mt-3">
           <Link
             href={`/items/${id}`}
-            className="rounded-xl bg-brand px-3 py-2 text-xs font-bold text-white transition hover:bg-brand-deep"
+            className="whitespace-nowrap rounded-xl bg-brand px-3.5 py-2 text-xs font-bold text-white transition hover:bg-brand-deep"
           >
             관리하기
           </Link>
           <Link
             href={`/items/${id}/tag`}
-            className="rounded-xl border border-brand-line px-3 py-2 text-xs font-bold text-brand-deep transition hover:bg-brand-soft"
+            className="whitespace-nowrap rounded-xl border border-brand-line px-3.5 py-2 text-xs font-bold text-brand-deep transition hover:bg-brand-soft"
           >
             태그 보기
           </Link>

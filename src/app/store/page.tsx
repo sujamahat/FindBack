@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { PublicHeader } from "@/components/PublicHeader";
 import { Mascot } from "@/components/Mascot";
 import { StoreGrid } from "./StoreGrid";
 
 export default function StorePage() {
   return (
-    <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-10">
+    <>
+    <PublicHeader />
+    <main className="mx-auto w-full max-w-4xl flex-1 px-4 sm:px-6 py-10">
       <div className="mb-8 flex flex-col items-center gap-2 text-center">
         <Mascot size={64} />
         <h1 className="text-xl font-bold text-ink">QR 태그 구매</h1>
@@ -21,5 +24,6 @@ export default function StorePage() {
         </Link>
       </div>
     </main>
+    </>
   );
 }

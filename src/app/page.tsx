@@ -20,7 +20,7 @@ export default function LandingPage() {
     <>
     <PublicHeader />
     <main className="flex-1 bg-surface">
-      <section className="mx-auto flex max-w-3xl flex-col items-center gap-6 px-6 pt-16 pb-10 text-center">
+      <section className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-4 sm:px-6 pt-16 pb-10 text-center">
         <Mascot size={112} />
         <h1 className="text-2xl font-bold leading-snug text-ink sm:text-3xl">
           QR 키링으로 분실물을
@@ -33,13 +33,13 @@ export default function LandingPage() {
         <div className="flex w-full max-w-sm flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/items/new"
-            className="flex-1 rounded-2xl bg-brand px-6 py-4 text-center text-base font-bold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98]"
+            className="flex-1 rounded-2xl bg-brand px-4 sm:px-6 py-4 text-center text-base font-bold text-white shadow-sm shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98]"
           >
             내 물건 등록하기
           </Link>
           <Link
             href="/recover"
-            className="flex-1 rounded-2xl border border-brand-line bg-surface px-6 py-4 text-center text-base font-bold text-brand-deep transition hover:bg-brand-soft active:scale-[0.98]"
+            className="flex-1 rounded-2xl border border-brand-line bg-surface px-4 sm:px-6 py-4 text-center text-base font-bold text-brand-deep transition hover:bg-brand-soft active:scale-[0.98]"
           >
             습득물 코드 입력하기
           </Link>
@@ -49,7 +49,7 @@ export default function LandingPage() {
         </Link>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 py-10">
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-10">
         <ol className="grid gap-4 sm:grid-cols-3">
           {STEPS.map((step, i) => (
             <li
@@ -66,7 +66,7 @@ export default function LandingPage() {
         </ol>
       </section>
 
-      <section className="mx-auto max-w-3xl px-6 pb-16">
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 pb-16">
         <div className="rounded-[24px] border border-brand-line bg-brand-soft p-6 text-ink">
           <p className="mb-4 font-bold text-brand-deep">FindBack이 지키는 원칙</p>
           <ul className="grid gap-2 text-sm sm:grid-cols-2">

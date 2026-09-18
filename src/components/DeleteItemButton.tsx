@@ -44,7 +44,7 @@ export function DeleteItemButton({
         aria-label="물건 삭제"
         className={
           variant === "icon"
-            ? "rounded-xl border border-rose-200 px-3 py-2 text-xs font-bold text-rose-700 transition hover:bg-rose-50"
+            ? "whitespace-nowrap rounded-xl border border-rose-200 px-3.5 py-2 text-xs font-bold text-rose-700 transition hover:bg-rose-50"
             : "rounded-xl border border-rose-200 px-4 py-2 text-sm font-bold text-rose-700 transition hover:bg-rose-50"
         }
       >

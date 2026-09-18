@@ -1,5 +1,8 @@
 export const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "";
-export const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
+// Supabase now issues "publishable" keys (sb_publishable_...); the legacy anon
+// key name is still accepted so older .env files keep working.
+export const SUPABASE_ANON_KEY =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? "";
 
 export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 
@@ -14,7 +17,7 @@ export function warnSupabaseNotConfigured() {
   if (isSupabaseConfigured || warned) return;
   warned = true;
   console.warn(
-    "[FindBack] NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY are not set. " +
+    "[FindBack] NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are not set. " +
       "Running without Supabase (demo mode). Copy .env.example to .env.local to enable it."
   );
 }

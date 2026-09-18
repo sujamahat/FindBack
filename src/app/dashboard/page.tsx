@@ -18,7 +18,7 @@ function DemoDashboard() {
   return (
     <>
       <AppHeader email={null} />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-8 pb-28">
+      <main className="mx-auto w-full max-w-4xl flex-1 px-4 sm:px-6 py-8 pb-28">
         <p className="mb-4 rounded-2xl border border-brand-line bg-brand-soft px-4 py-3 text-sm font-semibold text-brand-deep">
           데모 모드 — Supabase 환경 변수가 설정되지 않아 예시 데이터를 보여주고 있어요. .env.example을
           참고해 .env.local을 만들면 실제 데이터로 전환돼요.
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
   return (
     <>
       <AppHeader email={user.email} />
-      <main className="mx-auto w-full max-w-4xl flex-1 px-6 py-8 pb-28">
+      <main className="mx-auto w-full max-w-4xl flex-1 px-4 sm:px-6 py-8 pb-28">
         <ProfileBanner
           email={user.email ?? ""}
           total={total}
@@ -82,10 +82,10 @@ export default async function DashboardPage() {
         <ItemGrid initialItems={dashboardItems} />
       </main>
 
-      <div className="no-print sticky bottom-4 z-10 mx-auto flex w-full max-w-4xl justify-center px-6">
+      <div className="no-print sticky bottom-4 z-10 mx-auto hidden md:flex w-full max-w-4xl justify-center px-4 sm:px-6">
         <Link
           href="/items/new"
-          className="w-full rounded-2xl bg-brand px-6 py-4 text-center text-base font-bold text-white shadow-lg shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98] sm:w-auto sm:px-10"
+          className="w-full rounded-2xl bg-brand px-4 sm:px-6 py-4 text-center text-base font-bold text-white shadow-lg shadow-brand/30 transition hover:bg-brand-deep active:scale-[0.98] sm:w-auto sm:px-10"
         >
           + 새 물건 등록하기
         </Link>

@@ -81,7 +81,7 @@ CLI가 없다면 Supabase 대시보드의 **SQL Editor**에 `supabase/migrations
 | 변수 | 용도 |
 |---|---|
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase 프로젝트 URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | 브라우저/서버 공용 anon 키 (RLS 적용됨) |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | 브라우저/서버 공용 publishable 키 (RLS 적용됨, 기존 `NEXT_PUBLIC_SUPABASE_ANON_KEY`도 계속 지원) |
 | `SUPABASE_SERVICE_ROLE_KEY` | **서버 전용.** `/api/reports`, `/api/recover`, `/f/[publicToken]`에서만 사용 |
 | `NEXT_PUBLIC_APP_URL` | QR 코드/이메일 링크에 사용할 배포 URL |
 | `RESEND_API_KEY` (선택) | 설정 시 발견 제보 이메일 알림 발송 |
