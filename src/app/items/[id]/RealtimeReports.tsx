@@ -17,6 +17,18 @@ export type ReportRow = {
   created_at: string;
 };
 
+// Best-effort deep links for a quick preview — not a maps SDK integration,
+// just plain anchors to each service's own coordinate-search URL.
+function googleMapsUrl(lat: number, lng: number) {
+  return `https://www.google.com/maps?q=${lat},${lng}`;
+}
+function kakaoMapUrl(lat: number, lng: number) {
+  return `https://map.kakao.com/link/map/제보위치,${lat},${lng}`;
+}
+function naverMapUrl(lat: number, lng: number) {
+  return `https://map.naver.com/p/search/${lat},${lng}`;
+}
+
 export function RealtimeReports({
   itemId,
   initialReports,
@@ -77,22 +89,53 @@ export function RealtimeReports({
               {RETURN_METHOD_LABELS[report.return_method]}
             </span>
           </div>
-          {report.location_text && (
-            <p className="mt-2 text-sm text-navy">
-              <span className="font-semibold">발견 장소:</span> {report.location_text}
-            </p>
-          )}
           {report.custom_return_place && (
-            <p className="mt-1 text-sm text-navy">
+            <p className="mt-2 text-sm text-navy">
               <span className="font-semibold">맡긴 장소:</span> {report.custom_return_place}
             </p>
           )}
           {report.message && <p className="mt-1 text-sm text-navy-soft">“{report.message}”</p>}
-          {report.latitude != null && report.longitude != null && (
-            <p className="mt-1 text-xs text-navy-soft">
-              <span className="font-semibold text-navy">공유된 좌표:</span>{" "}
-              {report.latitude.toFixed(5)}, {report.longitude.toFixed(5)}
-            </p>
+
+          {(report.location_text || (report.latitude != null && report.longitude != null)) && (
+            <div className="mt-2 rounded-xl border border-sky bg-sky/20 p-3">
+              <p className="text-xs font-bold text-navy">📍 위치 정보</p>
+              {report.location_text && (
+                <p className="mt-1 text-sm text-navy">{report.location_text}</p>
+              )}
+              {report.latitude != null && report.longitude != null && (
+                <>
+                  <p className="mt-1 text-xs text-navy-soft">
+                    좌표: {report.latitude.toFixed(5)}, {report.longitude.toFixed(5)}
+                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <a
+                      href={googleMapsUrl(report.latitude, report.longitude)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-navy px-3 py-1 text-xs font-semibold text-navy"
+                    >
+                      구글 지도 →
+                    </a>
+                    <a
+                      href={kakaoMapUrl(report.latitude, report.longitude)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-navy px-3 py-1 text-xs font-semibold text-navy"
+                    >
+                      카카오맵 →
+                    </a>
+                    <a
+                      href={naverMapUrl(report.latitude, report.longitude)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-navy px-3 py-1 text-xs font-semibold text-navy"
+                    >
+                      네이버 지도 →
+                    </a>
+                  </div>
+                </>
+              )}
+            </div>
           )}
           {report.photo_url && (
             // eslint-disable-next-line @next/next/no-img-element

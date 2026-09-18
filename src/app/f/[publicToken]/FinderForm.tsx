@@ -4,6 +4,7 @@ import { useState } from "react";
 import { RETURN_METHODS, RETURN_METHOD_LABELS, type ReturnMethod } from "@/lib/constants";
 
 const QUICK_MESSAGES = ["경비실에 맡겼어요", "안내데스크에 맡겼어요", "기타 장소에 맡겼어요"];
+const LOCATION_PILLS = ["경비실에 맡겼어요", "안내데스크", "카페 카운터"];
 
 type GeoStatus = "idle" | "loading" | "granted" | "denied" | "unsupported";
 
@@ -14,6 +15,7 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
   const [returnMethod, setReturnMethod] = useState<ReturnMethod>("location_only");
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [message, setMessage] = useState("");
+  const [locationText, setLocationText] = useState("");
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [geoStatus, setGeoStatus] = useState<GeoStatus>("idle");
 
@@ -116,10 +118,28 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
         )}
       </div>
 
-      <label className="flex flex-col gap-2 text-sm font-semibold text-navy">
-        발견 장소 또는 건물 (선택)
+      <div className="flex flex-col gap-2">
+        <label className="text-sm font-semibold text-navy">발견 장소 또는 건물 (선택)</label>
+        <div className="flex flex-wrap gap-2">
+          {LOCATION_PILLS.map((pill) => (
+            <button
+              key={pill}
+              type="button"
+              onClick={() => setLocationText(pill)}
+              className={`rounded-full border px-3 py-1 text-xs font-semibold ${
+                locationText === pill
+                  ? "border-navy bg-sky/40 text-navy"
+                  : "border-sky text-navy-soft"
+              }`}
+            >
+              {pill}
+            </button>
+          ))}
+        </div>
         <input
           name="locationText"
+          value={locationText}
+          onChange={(e) => setLocationText(e.target.value)}
           maxLength={200}
           placeholder="예: 중앙도서관 2층 열람실"
           className="rounded-xl border border-sky bg-white px-4 py-3 text-base text-navy outline-none focus:border-navy"
@@ -127,7 +147,7 @@ export function FinderForm({ publicToken }: { publicToken: string }) {
         {fieldErrors.locationText && (
           <span className="text-xs font-semibold text-coral">{fieldErrors.locationText}</span>
         )}
-      </label>
+      </div>
 
       <fieldset className="flex flex-col gap-2">
         <legend className="mb-1 text-sm font-semibold text-navy">물건을 어떻게 하셨나요?</legend>
