@@ -56,6 +56,26 @@ describe("reportFormRefined", () => {
     const result = reportFormRefined.safeParse({ ...base, website: "http://spam.example" });
     expect(result.success).toBe(false);
   });
+
+  it("accepts null for optional fields (FormData.get() returns null, not undefined, for an unmounted input)", () => {
+    const result = reportFormRefined.safeParse({
+      ...base,
+      customReturnPlace: null,
+      message: null,
+      photoUrl: null,
+      website: null,
+    });
+    expect(result.success).toBe(true);
+  });
+
+  it("still requires a custom place when returnMethod is 'other', even if the field reads back null", () => {
+    const result = reportFormRefined.safeParse({
+      ...base,
+      returnMethod: "other",
+      customReturnPlace: null,
+    });
+    expect(result.success).toBe(false);
+  });
 });
 
 describe("recoverCodeSchema", () => {
