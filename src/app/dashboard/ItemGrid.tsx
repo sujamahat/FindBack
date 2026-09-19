@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { markItemStatus } from "@/app/items/[id]/actions";
 import { ItemCard } from "@/components/ItemCard";
 import type { ItemStatus } from "@/lib/constants";
 
@@ -30,6 +31,15 @@ export function ItemGrid({
 
   function handleDeleted(id: string) {
     setItems((prev) => prev.filter((item) => item.id !== id));
+  }
+
+  async function handleReturned(id: string) {
+    const result = await markItemStatus(id, "returned");
+    if (result.error) {
+      window.alert(result.error);
+      return;
+    }
+    setItems((prev) => prev.map((item) => (item.id === id ? { ...item, status: "returned" } : item)));
   }
 
   const shown = filter === "lost" ? items.filter((item) => item.status === "lost") : items;
@@ -78,6 +88,7 @@ export function ItemGrid({
             publicToken={item.publicToken}
             rewardAmount={item.rewardAmount}
             onDeleted={readOnly ? undefined : () => handleDeleted(item.id)}
+            onMarkReturned={readOnly ? undefined : () => handleReturned(item.id)}
           />
         ))}
         {!readOnly && (

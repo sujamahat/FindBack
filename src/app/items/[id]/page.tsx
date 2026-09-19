@@ -125,7 +125,14 @@ export default async function ItemDetailPage({
         </section>
 
         <section className="mt-10">
-          <h2 className="mb-3 text-lg font-bold text-ink">발견 제보</h2>
+          <h2 className="mb-3 flex items-center gap-2 text-lg font-bold text-ink">
+            발견 제보
+            {(reports?.length ?? 0) > 0 && (
+              <span className="rounded-full bg-rose-500 px-2 py-0.5 text-xs font-bold text-white">
+                {reports?.length}
+              </span>
+            )}
+          </h2>
           <RealtimeReports itemId={item.id} initialReports={reports ?? []} />
         </section>
 

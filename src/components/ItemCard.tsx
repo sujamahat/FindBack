@@ -15,6 +15,7 @@ export function ItemCard({
   publicToken,
   rewardAmount,
   onDeleted,
+  onMarkReturned,
 }: {
   id: string;
   name: string;
@@ -26,7 +27,10 @@ export function ItemCard({
   publicToken?: string;
   rewardAmount?: number | null;
   onDeleted?: () => void;
+  /** Shown for lost/found items; the parent performs the status change. */
+  onMarkReturned?: () => void;
 }) {
+  const canReturn = onMarkReturned && (status === "lost" || status === "found");
   return (
     <div className="flex min-w-0 flex-col overflow-hidden rounded-[24px] border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-1 hover:border-brand-line">
       <div className="relative h-36 w-full overflow-hidden rounded-[18px] bg-brand-soft">
@@ -38,6 +42,11 @@ export function ItemCard({
         />
         <div className="absolute left-2.5 top-2.5">
           <StatusBadge status={status} />
+          {reportCount > 0 && status !== "returned" && (
+            <span className="ml-1.5 inline-flex items-center rounded-full bg-rose-500 px-2 py-1 text-[11px] font-bold text-white shadow-sm">
+              📩 제보 {reportCount}
+            </span>
+          )}
         </div>
         <div className="absolute right-2.5 top-2.5 flex items-center gap-1.5">
           <Link
@@ -59,6 +68,15 @@ export function ItemCard({
         <p className="line-clamp-2 min-h-[2rem] text-xs text-ink-soft">
           {description || `${category} · 발견 제보 ${reportCount}건`}
         </p>
+        {canReturn && (
+          <button
+            type="button"
+            onClick={onMarkReturned}
+            className="mt-2 rounded-xl border border-brand-line px-3 py-2 text-xs font-bold text-brand-deep transition hover:bg-brand-soft"
+          >
+            반환 완료
+          </button>
+        )}
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-line pt-3">
           <span className="truncate font-mono text-[11px] text-ink-mute">
             {publicToken ? `#${publicToken.slice(0, 8)}` : ""}

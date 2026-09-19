@@ -37,7 +37,10 @@ export async function markItemStatus(itemId: string, status: "lost" | "returned"
   }
 
   if (status === "lost" || status === "returned") {
-    await supabase.from("item_status_events").insert({ item_id: itemId, event_type: status });
+    const { error: eventError } = await supabase
+      .from("item_status_events")
+      .insert({ item_id: itemId, event_type: status });
+    if (eventError) console.error("[findback] failed to log status event", eventError);
   }
 
   revalidatePath(`/items/${itemId}`);

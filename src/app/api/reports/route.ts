@@ -124,7 +124,11 @@ export async function POST(request: Request) {
   }
 
   if (item.status === "safe" || item.status === "lost") {
-    await admin.from("items").update({ status: "found" }).eq("id", item.id);
+    const { error: statusError } = await admin
+      .from("items")
+      .update({ status: "found" })
+      .eq("id", item.id);
+    if (statusError) console.error("[findback] failed to mark item found", statusError);
   }
 
   // Best-effort notification; never fail the finder's request because of it.
