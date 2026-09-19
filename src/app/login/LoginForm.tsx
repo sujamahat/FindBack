@@ -96,6 +96,20 @@ export function LoginForm({ next }: { next: string }) {
     setStatus("sent");
   }
 
+  async function handleGoogle() {
+    if (!isSupabaseConfigured) return;
+    setError(null);
+    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
+    const { error } = await createClient().auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo },
+    });
+    if (error) {
+      setStatus("error");
+      setError("Google 로그인을 시작하지 못했어요. 잠시 후 다시 시도해주세요.");
+    }
+  }
+
   function switchMode(next: Mode) {
     setMode(next);
     setStatus("idle");
@@ -139,6 +153,20 @@ export function LoginForm({ next }: { next: string }) {
           만든 뒤 개발 서버를 다시 시작해주세요.
         </p>
       )}
+
+      <button
+        type="button"
+        onClick={handleGoogle}
+        disabled={!isSupabaseConfigured}
+        className="rounded-2xl border border-line bg-white px-6 py-3.5 text-sm font-bold text-ink transition hover:bg-background active:scale-[0.98] disabled:opacity-60"
+      >
+        Google로 계속하기
+      </button>
+      <div className="flex items-center gap-3 text-xs text-ink-mute">
+        <span className="h-px flex-1 bg-line" />
+        또는
+        <span className="h-px flex-1 bg-line" />
+      </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="flex flex-col gap-2 text-sm font-bold text-ink">
