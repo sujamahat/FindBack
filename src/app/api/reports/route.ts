@@ -101,6 +101,9 @@ export async function POST(request: Request) {
     .single();
 
   if (itemError || !item) {
+    if (itemError && itemError.code !== "PGRST116") {
+      console.error("Report submission failed: item lookup error", itemError);
+    }
     return NextResponse.json({ error: "물건을 찾을 수 없습니다." }, { status: 404 });
   }
 
@@ -116,9 +119,20 @@ export async function POST(request: Request) {
   });
 
   if (insertError) {
-    console.error("[findback] failed to insert found_report", insertError);
+    console.error("Report submission failed:", insertError);
+    const debug = process.env.NODE_ENV !== "production" || process.env.REPORT_DEBUG === "true";
     return NextResponse.json(
-      { error: "제보를 저장하지 못했어요. 다시 시도해주세요." },
+      {
+        error: "제보를 저장하지 못했어요. 다시 시도해주세요.",
+        ...(debug && {
+          debug: {
+            message: insertError.message,
+            code: insertError.code,
+            details: insertError.details,
+            hint: insertError.hint,
+          },
+        }),
+      },
       { status: 500 }
     );
   }
